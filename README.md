@@ -27,6 +27,16 @@ You will need to think about the size of the data you are writing and also the t
 Gforth using a string and length pair but C requires only the string but there must be a null terminator at the end. For sending you can simply use s\" c string\0" DROP but for converting back i have also shown below >c-str and c-str> words to help out.
 
 # How to use SDL2 Bindings.
+Using the SDL2 bindings for Gforth is just as it is in C. The function names are the exact same. All arguments are placed on the stack in the same order as the C version. The return value is placed on the stack afterwards. All the SDL2 Constants and Enums are included. NULL is simply 0 below i will create a CONSTANT for convinience. Below is an example.
+
+C version from https://wiki.libsdl.org/SDL2/SDL_CreateWindow
+
+    // SDL_Window * SDL_CreateWindow(const char *title, int x, int y, int w, int h, Uint32 flags);
+    SDL_Window *window = SDL_CreateWindow("Window Title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 0);
+
+Gforth version
+
+    S\"Window Title\0" DROP SDL_WINDOWPOS_CENTERED SDL_WINDOWPOS_CENTERED 800 600 0 SDL_CreateWindow window !
 
 
 
