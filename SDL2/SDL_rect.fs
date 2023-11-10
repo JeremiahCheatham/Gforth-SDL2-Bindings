@@ -16,9 +16,9 @@ begin-structure SDL_FPoint
 drop 8 end-structure
 \ struct SDL_Rect
 begin-structure SDL_Rect
+	drop 8 4 +field SDL_Rect-w
 	drop 0 4 +field SDL_Rect-x
 	drop 4 4 +field SDL_Rect-y
-	drop 8 4 +field SDL_Rect-w
     drop 12 4 +field SDL_Rect-h
 drop 16 end-structure
 \ struct SDL_FRect
