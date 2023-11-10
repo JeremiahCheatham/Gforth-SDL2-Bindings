@@ -11,7 +11,7 @@ require SDL2/SDL.fs
 ;
 
 \ Set constants for creating the SDL Window.
-s" Open Window" >c-str CONSTANT WINDOW_TITLE
+s" 01 Open Window" >c-str CONSTANT WINDOW_TITLE
 800 CONSTANT SCREEN_WIDTH
 600 CONSTANT SCREEN_HEIGHT
 
@@ -55,16 +55,16 @@ VARIABLE renderer
 ;
 
 : game-loop ( -- )
-        \ Clears the back screen buffer.
-        renderer @ SDL_RenderClear DROP
-        
-        \ Do all your drawing here.
+    \ Clears the back screen buffer.
+    renderer @ SDL_RenderClear DROP
+    
+    \ Do all your drawing here.
 
-        \ Flips the front and back buffers, displays what has been drawn. 
-        renderer @ SDL_RenderPresent
+    \ Flips the front and back buffers, displays what has been drawn. 
+    renderer @ SDL_RenderPresent
 
-        \ keeps window open for 5 seconds.
-        5000 SDL_Delay
+    \ keeps window open for 5 seconds.
+    5000 SDL_Delay
 ;
 
 : play-game ( -- )
