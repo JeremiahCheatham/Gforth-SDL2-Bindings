@@ -38,8 +38,19 @@ Gforth version
 
     S\"Window Title\0" DROP SDL_WINDOWPOS_CENTERED SDL_WINDOWPOS_CENTERED 800 600 0 SDL_CreateWindow window !
 
+## To help working with C and SDL2
+NULL is used often it's simply 0 but i have added a constant. To get strings back from SDL such as SDL_GetError c-str> will return a string length pair. To send strings into C functions >c-str will take a string length pair and return a C style NULL terminated string. To convert Gforths 64bit signed to a 32bit sized and store it in 4bytes int32<! this is used for setting SDL_Rect x, y, w and h. To pull a number out int32<@ will put onto the stack a 64bit version.
 
-
+    \ Helpers for C
+    0 CONSTANT NULL
+    : c-str> ( c-str -- string u ) 0 BEGIN 2DUP + C@ WHILE 1+ REPEAT ;
+    : >c-str ( string u -- c-str )
+        1+ DUP ALLOCATE
+        DROP ROT OVER 3 PICK 1- MOVE
+        DUP ROT 1- + 0 SWAP C!
+    ;
+    : int32>! ( 64bit signed -- 32bit signed ) DUP 0< IF 0x100000000 + THEN L! ;
+    : int32<@ ( 32bit signed -- 64bit signed ) L@ DUP 0x7FFFFFFF > IF 0x100000000 - THEN ;
 
 
 
