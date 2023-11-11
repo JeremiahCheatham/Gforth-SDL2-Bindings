@@ -78,7 +78,7 @@ We will need 2 variables that will hold the window and renderer pointers.
     VARIABLE window
     VARIABLE renderer
 
-## A Word to gracefully cleanu[ and exit the game.
+## A Word to gracefully cleanup and exit the game.
 https://wiki.libsdl.org/SDL2/SDL_DestroyRenderer \
 https://wiki.libsdl.org/SDL2/SDL_DestroyWindow \
 https://wiki.libsdl.org/SDL2/SDL_Quit \
@@ -151,7 +151,7 @@ The SDL_RenderClear clears the renderer or backbuffer. It takes the renderer poi
         5000 SDL_Delay
     ;
 
-## Play the game
+## Play game
 To pull together all these words we have created we create play-game. This initializes SDL, creates the window, creates the renderer, runs the game loop for 5 seconds then finally cleanup the code. The will open a black window for 5 seconds and close it. It will not respond to closing the window as that is an event that will be added later.
 
     : play-game ( -- )
@@ -164,8 +164,62 @@ To pull together all these words we have created we create play-game. This initi
 
     play-game
 
-## Run Gforth
+## Run with Gforth
 01-open-window.fs contains all the code above. If this is your first time running this project it may take a minute or 2 to compile all the SDL2 bindings.
 
     gforth 01-open-window.fs
+
+# Closing the Window
+Now that we have successfully create a window in Gforth SDL it would be nice to be able to close it. We will make the game loop actually loop and check for a close event.
+
+## Create and Alocate an SDL_Event untion.
+https://wiki.libsdl.org/SDL2/SDL_Event \
+The SDL_Event is a union that holds a struct of a single event. We will loop through an array of events since the last game loop. The event struct will hold each even until the array is emptied. We will use the event to check for a close events or key press.
+
+    \ Add after the other variables.
+    CREATE event SDL_Event ALLOT
+
+## Creating and infinate game loop.
+We will indent the previous code in the game loop and then put it inside of a BEGIN FALSE UNTIL loop. This will loop forever. We also need to change the SDL_Delay from 5000(5 seconds) to 16ms this will approximate a loop that runs 60 times a second.
+
+    : game-loop ( -- )
+        \ An infinate loop.
+        BEGIN
+            
+            \ Clears the back screen buffer.
+            renderer @ SDL_RenderClear DROP
+            
+            \ Do all your drawing here.
+    
+            \ Flips the front and back buffers, displays what has been drawn. 
+            renderer @ SDL_RenderPresent
+    
+            \ 16ms delay in a loop is about 60 FPS.
+            16 SDL_Delay
+    
+        FALSE UNTIL
+    ;
+
+## Polling the Events and checking them.
+https://wiki.libsdl.org/SDL2/SDL_PollEvent \
+https://wiki.libsdl.org/SDL2/SDL_KeyboardEvent \
+
+    \ Loop through all the SDL events since last game loop.
+    BEGIN event SDL_PollEvent WHILE
+        \ Check event type, SDL_QUIT or SDL_KEYDOWN.
+        event SDL_Event-type L@
+        DUP SDL_QUIT_ENUM = IF
+            DROP game-cleanup
+        THEN
+        \ Check which key has been pressed.
+        SDL_KEYDOWN = IF event SDL_KeyboardEvent-keysym L@
+            SDL_SCANCODE_ESCAPE = IF
+                game-cleanup
+            THEN
+        THEN
+    REPEAT
+
+
+
+
 
