@@ -23,6 +23,21 @@ Gforth stores numbers on a 64bit system as a 64bit two's compliment signed int. 
 
 You will need to think about the size of the data you are writing and also the type. specifically for 32bit signed int in Rects i have will use a int32<@ and int32>! that will be shown below. For 1 byte events simply C@ will work.
 
+## Accessing members of C Structs and Unions
+https://wiki.libsdl.org/SDL2/SDL_Rect \
+SDL uses structs and unions that have members. An example is the SDL_Rect struct, which has 4 members: x, y, w, h. Each member of an SDL_Rect is of type 32-bit signed int. In C, SDL_Rect myrect; creates the variable myrect, and to access x, we would use myrect.x. This is just a fancy way of offsetting the address to the position of its member. The bindings in Forth will have an SDL_Rect for allocating the size of the struct, but it also has SDL_Rect-x, SDL_Rect-y, SDL_Rect-w, and SDL_Rect-h for use as offsets. So in Gforth, myrect SDL_Rect-x will put on the stack the address to the x member. As I said above, you need to constrain the fetch to only 4 bytes and convert it. Remember, all the bindings structs and unions will have the type-member to get the offset. Here is an example of a fetch and store using int32>! and int32<@.
+
+    // C SDL2 assignment and retrieve
+    SDL_Rect myrect;
+    myrect.x = 10
+    int getx = myrect.x
+
+    \ Forth SDL2 store and fetch
+    CREATE myrect SDL_Rect ALLOT
+    VARIABLE getx
+    10 myrect SDL_Rect-x int32>!
+    myrect SDL_Rect-x int32<@ getx !
+
 ## C style strings.
 Gforth uses a string and length pair but C requires only the string but there must be a NULL terminator at the end. For sending, you can simply use s\” c string\0" DROP but for converting back, I have also shown below >c-str and c-str> words to help out.
 
