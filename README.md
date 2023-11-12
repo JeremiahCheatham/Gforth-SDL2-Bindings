@@ -54,13 +54,13 @@ NULL is used often it’s simply 0 but I have added a constant. To get strings b
 
 # Creating a Window
 ## Importing SDL2 bindings.
-Just like in C or C++ to import all the basic SDL2 bindings we simply need to require SDL.fs.
+Just like in C or C++, to import all the basic SDL2 bindings, we simply need to require SDL.fs.
 
     \ Include all basic SDL2 functionality
     require SDL2/SDL.fs
 
 ## C Helpers.
-As shown above we will add in some helpers for dealing working with C.
+As shown above, we will add in some helpers for working with C.
 
     \ Helpers for C
     0 CONSTANT NULL
@@ -71,18 +71,18 @@ As shown above we will add in some helpers for dealing working with C.
         DUP ROT 1- + 0 SWAP C!
     ;
 
-## Window and Renderer pointers.
+## Window and Renderer Pointers
 We will need 2 variables that will hold the window and renderer pointers.
 
     \ Pointers for SDL window and renderer.
     VARIABLE window
     VARIABLE renderer
 
-## A Word to gracefully cleanup and exit the game.
+## A Word to Gracefully Cleanup and Exit the Game
 https://wiki.libsdl.org/SDL2/SDL_DestroyRenderer \
 https://wiki.libsdl.org/SDL2/SDL_DestroyWindow \
 https://wiki.libsdl.org/SDL2/SDL_Quit \
-SDL allocates memory on the heap that needs to be manually freed. We will make a word to free any memory and properly shut down SDL. We can use the cleanup functions on the pointers even if they are 0/NULL so this is safe to call this at any point after the VARIABLEs have been created like above.
+SDL allocates memory on the heap that needs to be manually freed. We will make a word to free any memory and properly shut down SDL. We can use the cleanup functions on the pointers even if they are 0/NULL, so it is safe to call this at any point after the VARIABLEs have been created as mentioned above.
 
     \ Release allocated memory for pointers and shutdown SDL correctly.
     : game-cleanup ( -- )
@@ -92,10 +92,10 @@ SDL allocates memory on the heap that needs to be manually freed. We will make a
         BYE
     ;
 
-## The SDL_Init function takes
+## Initializing SDL
 https://wiki.libsdl.org/SDL2/SDL_Init \
 https://wiki.libsdl.org/SDL2/SDL_GetError \
-The SDL_Init function takes in a FLAG and returns a 0 on success. If it returns anything else we will give and error message then get SDL_GetError c-string and convert it then prinnt it. Finally it will call the game-cleanup word to gracefully shut down.
+The SDL_Init function takes in a FLAG and returns a 0 on success. If it returns anything else, we will give an error message, then get the SDL_GetError c-string, convert it, and then print it. Finally it will call the game-cleanup word to gracefully shut down.
 
     : initialize-sdl ( -- )
         \ initialize SDL2. 0 is returned on success.
@@ -105,9 +105,9 @@ The SDL_Init function takes in a FLAG and returns a 0 on success. If it returns 
         THEN
     ;
 
-## Create the SDL Window
+## Creating the SDL Window
 https://wiki.libsdl.org/SDL2/SDL_CreateWindow \
-The SDL_CreateWindow function takes a c string, x, y window position, w, h window size and an optional window flag. An address to the window is placed on the stack or a 0/NULL. We will store that and then check if it's 0 to shut down.
+The SDL_CreateWindow function takes a C string, x and y window positions, w and h window sizes, and an optional window flag. An address to the window is placed on the stack, or a 0/NULL. We will store that and then check if it’s 0 to shut down.
 
     \ Create the SDL2 Window and store the pointer in window. NULL/0 is returned if failed.
     : create-window ( -- )
@@ -136,7 +136,7 @@ The SDL_CreateRenderer takes in the window pointer and an optional flag. Like ab
 https://wiki.libsdl.org/SDL2/SDL_RenderClear \
 https://wiki.libsdl.org/SDL2/SDL_RenderPresent \
 https://wiki.libsdl.org/SDL2/SDL_Delay \
-The SDL_RenderClear clears the renderer or backbuffer. It takes the renderer pointer and returns to the stack a 0 on success. We will just ignore it and DROP it from the stack. When all drawing to the renderer has finish SDL_RenderPresent flips the buffers to display what has been drawn. 5000 SDL_Delay will pause the program for 5 seconds before closing. 
+The SDL_RenderClear clears the renderer or backbuffer. It takes the renderer pointer and returns to the stack a 0 on success. We will just ignore it and DROP it from the stack. When all drawing to the renderer has finished SDL_RenderPresent flips the buffers to display what has been drawn. 5000 SDL_Delay will pause the program for 5 seconds before closing. 
 
     : game-loop ( -- )
         \ Clears the back screen buffer.
@@ -170,16 +170,16 @@ To pull together all these words we have created we create play-game. This initi
     gforth 01-open-window.fs
 
 # Closing the Window
-Now that we have successfully create a window in Gforth SDL it would be nice to be able to close it. We will make the game loop actually loop and check for a close event.
+Now that we have successfully created a window in Gforth SDL, it would be nice to be able to close it. We will make the game loop actually loop and check for a close event.
 
-## Create and Alocate an SDL_Event untion.
+## Create and Allocate an SDL_Event union
 https://wiki.libsdl.org/SDL2/SDL_Event \
 The SDL_Event is a union that holds a struct of a single event. We will loop through an array of events since the last game loop. The event struct will hold each even until the array is emptied. We will use the event to check for a close events or key press.
 
     \ Add after the other variables.
     CREATE event SDL_Event ALLOT
 
-## Creating and infinate game loop.
+## Creating an infinite game loop
 We will indent the previous code in the game loop and then put it inside of a BEGIN FALSE UNTIL loop. This will loop forever. We also need to change the SDL_Delay from 5000(5 seconds) to 16ms this will approximate a loop that runs 60 times a second.
 
     : game-loop ( -- )
