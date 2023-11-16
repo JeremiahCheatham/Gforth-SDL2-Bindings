@@ -19,16 +19,16 @@ s" 03 Background" >c-str CONSTANT WINDOW_TITLE
 IMG_INIT_PNG CONSTANT img-flags
 
 \ Pointers for SDL window, renderer and other variables. 
-VARIABLE window
-VARIABLE renderer
+NULL VALUE window
+NULL VALUE renderer
 CREATE event SDL_Event ALLOT
-VARIABLE background
+NULL VALUE background
 
 \ Release allocated memory for pointers and shutdown SDL correctly.
 : game-cleanup ( -- )
-    background @ SDL_DestroyTexture
-    renderer @ SDL_DestroyRenderer
-    window @ SDL_DestroyWindow
+    background SDL_DestroyTexture
+    renderer SDL_DestroyRenderer
+    window SDL_DestroyWindow
     SDL_Quit
     BYE
 ;
@@ -50,8 +50,8 @@ VARIABLE background
 \ Create the SDL2 Window and store the pointer in window. NULL/0 is returned if failed.
 : create-window ( -- )
     WINDOW_TITLE SDL_WINDOWPOS_CENTERED SDL_WINDOWPOS_CENTERED SCREEN_WIDTH SCREEN_HEIGHT 0
-    SDL_CreateWindow window !
-    window @ 0= IF 
+    SDL_CreateWindow TO window
+    window 0= IF 
         ." Error creating  window: " SDL_GetError c-str> TYPE CR
         game-cleanup
     THEN
@@ -59,8 +59,8 @@ VARIABLE background
 
 \ Create the SDL Renderer and store the pointer in renderer. NULL/0 is returned if failed.
 : create-renderer ( -- )
-    window @ -1 0 SDL_CreateRenderer renderer !
-    renderer @ 0= IF
+    window -1 0 SDL_CreateRenderer TO renderer
+    renderer 0= IF
         ." Failed to create renderer: " SDL_GetError c-str> TYPE CR
         game-cleanup
     THEN
@@ -68,8 +68,8 @@ VARIABLE background
 
 : load-media ( -- )
     \ load an image directly to a hardware texture. NULL/0 is returned if failed.
-    renderer @ S" images/background.png" >c-str IMG_LoadTexture background !
-    background @ 0= IF
+    renderer S" images/background.png" >c-str IMG_LoadTexture TO background
+    background 0= IF
         ." Failed to create texuture from surface: " SDL_GetError c-str> TYPE CR
         game-cleanup
     THEN
@@ -94,13 +94,13 @@ VARIABLE background
         REPEAT
         
         \ Clears the back screen buffer.
-        renderer @ SDL_RenderClear DROP
+        renderer SDL_RenderClear DROP
         
         \ SDL_RenderCopy takes a source and destination rect. NULL will use entire space.
-        renderer @ background @ NULL NULL SDL_RenderCopy DROP
+        renderer background NULL NULL SDL_RenderCopy DROP
 
         \ Flips the front and back buffers, displays what has been drawn. 
-        renderer @ SDL_RenderPresent
+        renderer SDL_RenderPresent
 
         \ 16ms delay in a loop is about 60 FPS.
         16 SDL_Delay

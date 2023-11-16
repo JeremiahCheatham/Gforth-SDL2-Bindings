@@ -16,13 +16,13 @@ s" 01 Open Window" >c-str CONSTANT WINDOW_TITLE
 600 CONSTANT SCREEN_HEIGHT
 
 \ Pointers for SDL window and renderer.
-VARIABLE window
-VARIABLE renderer
+NULL VALUE window
+NULL VALUE renderer
 
 \ Release allocated memory for pointers and shutdown SDL correctly.
 : game-cleanup ( -- )
-    renderer @ SDL_DestroyRenderer
-    window @ SDL_DestroyWindow
+    renderer SDL_DestroyRenderer
+    window SDL_DestroyWindow
     SDL_Quit
     BYE
 ;
@@ -38,8 +38,8 @@ VARIABLE renderer
 \ Create the SDL2 Window and store the pointer in window. NULL/0 is returned if failed.
 : create-window ( -- )
     WINDOW_TITLE SDL_WINDOWPOS_CENTERED SDL_WINDOWPOS_CENTERED SCREEN_WIDTH SCREEN_HEIGHT 0
-    SDL_CreateWindow window !
-    window @ 0= IF 
+    SDL_CreateWindow TO window
+    window 0= IF 
         ." Error creating  window: " SDL_GetError c-str> TYPE CR
         game-cleanup
     THEN
@@ -47,8 +47,8 @@ VARIABLE renderer
 
 \ Create the SDL Renderer and store the pointer in renderer. NULL/0 is returned if failed.
 : create-renderer ( -- )
-    window @ -1 0 SDL_CreateRenderer renderer !
-    renderer @ 0= IF
+    window -1 0 SDL_CreateRenderer TO renderer
+    renderer 0= IF
         ." Failed to create renderer: " SDL_GetError c-str> TYPE CR
         game-cleanup
     THEN
@@ -56,12 +56,12 @@ VARIABLE renderer
 
 : game-loop ( -- )
     \ Clears the back screen buffer.
-    renderer @ SDL_RenderClear DROP
+    renderer SDL_RenderClear DROP
     
     \ Do all your drawing here.
 
     \ Flips the front and back buffers, displays what has been drawn. 
-    renderer @ SDL_RenderPresent
+    renderer SDL_RenderPresent
 
     \ keeps window open for 5 seconds.
     5000 SDL_Delay
