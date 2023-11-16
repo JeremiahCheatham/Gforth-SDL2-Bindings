@@ -181,7 +181,7 @@ play-game
 ```
 ## Run with Gforth
 `01-open-window.fs` contains all the code above. If this is your first time running this project it may take a minute or 2 to compile all the SDL2 bindings.
-```bash
+```shell
 gforth 01-open-window.fs
 ```
 # Closing the Window
@@ -241,186 +241,185 @@ gforth 02-close-window.fs
 ```
 #
 ##
-
-    require SDL2/SDL_image.fs
-
-
-`require SDL2/SDL_image.fs`
-
+https://wiki.libsdl.org/SDL2_image/FrontPage
 ```forth
 require SDL2/SDL_image.fs
 ```
-
 ##
-
-    \ Flags for SDL_image
-    IMG_INIT_PNG CONSTANT img-flags
-
+https://wiki.libsdl.org/SDL2_image/IMG_Init
+```forth
+\ Flags for SDL_image
+IMG_INIT_PNG CONSTANT img-flags
+```
 ##
-
-    NULL VALUE background
-
+```forth
+NULL VALUE background
+```
 ##
-
-    background SDL_DestroyTexture
-
+https://wiki.libsdl.org/SDL2/SDL_DestroyTexture
+```forth
+background SDL_DestroyTexture
+```
 ##
-
-    \ flags are bitwise encoded. IMG_Init returns bitwise answer. Using flags to mask answer then compare to check.
-    img-flags IMG_Init img-flags AND img-flags <> IF
-        ." Error initializing SDL_image: " SDL_GetError c-str> TYPE CR
+https://wiki.libsdl.org/SDL2_image/IMG_Init
+```forth
+\ flags are bitwise encoded. IMG_Init returns bitwise answer. Using flags to mask answer then compare to check.
+img-flags IMG_Init img-flags AND img-flags <> IF
+    ." Error initializing SDL_image: " SDL_GetError c-str> TYPE CR
+    game-cleanup
+THEN
+```
+##
+https://wiki.libsdl.org/SDL2_image/IMG_LoadTexture
+```forth
+: load-media ( -- )
+    \ load an image directly to a hardware texture. NULL/0 is returned if failed.
+    renderer S" images/background.png" >c-str IMG_LoadTexture TO background
+    background 0= IF
+        ." Failed to create texuture from surface: " SDL_GetError c-str> TYPE CR
         game-cleanup
     THEN
-
-##
-
-    : load-media ( -- )
-        \ load an image directly to a hardware texture. NULL/0 is returned if failed.
-        renderer S" images/background.png" >c-str IMG_LoadTexture TO background
-        background 0= IF
-            ." Failed to create texuture from surface: " SDL_GetError c-str> TYPE CR
-            game-cleanup
-        THEN
-    ;
-
+;
+```
 #
 ##
-
-    require random.fs
-
+```forth
+require random.fs
+```
 ##
-
-    \ Seed the random generator, throw away the first number.
-    utime DROP seed ! rnd DROP
-
+```forth
+\ Seed the random generator, throw away the first number.
+utime DROP seed ! rnd DROP
+```
 ##
-
-    \ set a random number from 0 to 255 for red, green, blue and set alpha to 255 for the renderer.
-    : random-color-renderer ( -- )
-        renderer 256 random 256 random 256 random 255 SDL_SetRenderDrawColor DROP
-    ;
-
+https://wiki.libsdl.org/SDL2/SDL_SetRenderDrawColor
+```forth
+\ set a random number from 0 to 255 for red, green, blue and set alpha to 255 for the renderer.
+: random-color-renderer ( -- )
+    renderer 256 random 256 random 256 random 255 SDL_SetRenderDrawColor DROP
+;
+```
 ##
-
-    DUP SDL_SCANCODE_ESCAPE = IF
-        DROP game-cleanup
-    THEN
-    SDL_SCANCODE_SPACE = IF
-        random-color-renderer
-    THEN
-
+```forth
+                DUP SDL_SCANCODE_ESCAPE = IF
+                    DROP game-cleanup
+                THEN
+                SDL_SCANCODE_SPACE = IF
+                    random-color-renderer
+                THEN
+```
 #
 ##
-
-    require SDL2/SDL_ttf.fs
-
+```forth
+require SDL2/SDL_ttf.fs
+```
 ##
-
-    : int32>! ( 64bit signed -- 32bit signed ) DUP 0< IF 0x100000000 + THEN L! ;
-    : int32<@ ( 32bit signed -- 64bit signed ) L@ DUP 0x7FFFFFFF > IF 0x100000000 - THEN ;
-
+```forth
+: int32>! ( 64bit signed -- 32bit signed ) DUP 0< IF 0x100000000 + THEN L! ;
+: int32<@ ( 32bit signed -- 64bit signed ) L@ DUP 0x7FFFFFFF > IF 0x100000000 - THEN ;
+```
 ##
-
-    80 CONSTANT TEXT_SIZE
-
+```forth
+80 CONSTANT TEXT_SIZE
+```
 ##
-
-    NULL VALUE text-font
-    CREATE text-color SDL_Color ALLOT
-    NULL VALUE text-image
-    CREATE text-rect SDL_Rect ALLOT
-    2 VALUE text-xvel
-    2 VALUE text-yvel
-
+```forth
+NULL VALUE text-font
+CREATE text-color SDL_Color ALLOT
+NULL VALUE text-image
+CREATE text-rect SDL_Rect ALLOT
+2 VALUE text-xvel
+2 VALUE text-yvel
+```
 ##
-
+```forth
     text-font TTF_CloseFont
     text-image SDL_DestroyTexture
-
+```
 ##
-
+```forth
     TTF_Quit
     IMG_Quit
-
+```
 ##
-
+```forth
     \ TTF_Init returns 0 on success.
     TTF_Init IF
         ." Error initializing SDL_ttf: " TTF_GetError c-str> TYPE CR
         game-cleanup
     THEN
-
+```
 ##
+```forth
+: create-text ( -- )
+    S" fonts/freesansbold.ttf" >c-str TEXT_SIZE TTF_OpenFont TO text-font
+    text-font 0= IF
+        ." Error creating font: " TTF_GetError c-str> TYPE CR
+        game-cleanup
+    THEN
 
-    : create-text ( -- )
-        S" fonts/freesansbold.ttf" >c-str TEXT_SIZE TTF_OpenFont TO text-font
-        text-font 0= IF
-            ." Error creating font: " TTF_GetError c-str> TYPE CR
+    text-color
+    255 OVER SDL_Color-r C!
+    255 OVER SDL_Color-g C!
+    255 OVER SDL_Color-b C!
+    255 SWAP SDL_Color-a C!
+
+    text-font S" Forth" >c-str text-color TTF_RenderText_Blended DUP 0= IF
+        ." Error creating font surface: " SDL_GetError c-str> TYPE CR
+        DROP game-cleanup
+    ELSE
+        text-rect
+        OVER SDL_Surface-w int32<@ OVER SDL_Rect-w int32>!
+        OVER SDL_Surface-h int32<@ SWAP SDL_Rect-h int32>!
+        renderer OVER SDL_CreateTextureFromSurface TO text-image
+        SDL_FreeSurface
+        text-image 0= IF
+            ." Error creating texuture from file: " SDL_GeTerror c-str> TYPE CR
             game-cleanup
         THEN
-    
-        text-color
-        255 OVER SDL_Color-r C!
-        255 OVER SDL_Color-g C!
-        255 OVER SDL_Color-b C!
-        255 SWAP SDL_Color-a C!
-
-        text-font S" Forth" >c-str text-color TTF_RenderText_Blended DUP 0= IF
-            ." Error creating font surface: " SDL_GetError c-str> TYPE CR
-            DROP game-cleanup
-        ELSE
-            text-rect
-            OVER SDL_Surface-w int32<@ OVER SDL_Rect-w int32>!
-            OVER SDL_Surface-h int32<@ SWAP SDL_Rect-h int32>!
-            renderer OVER SDL_CreateTextureFromSurface TO text-image
-            SDL_FreeSurface
-            text-image 0= IF
-                ." Error creating texuture from file: " SDL_GeTerror c-str> TYPE CR
-                game-cleanup
-            THEN
-        THEN
-    ;
-
+    THEN
+;
+```
 ##
-
-    : text-update ( -- )
-        text-rect DUP SDL_Rect-x int32<@ text-xvel +
-        DUP 0 < IF
-            DROP 0 SWAP SDL_Rect-x int32>!
+```forth
+: text-update ( -- )
+    text-rect DUP SDL_Rect-x int32<@ text-xvel +
+    DUP 0 < IF
+        DROP 0 SWAP SDL_Rect-x int32>!
+        text-xvel NEGATE TO text-xvel
+    ELSE
+        DUP SCREEN_WIDTH 3 PICK SDL_Rect-w int32<@ - > IF
+            DROP SCREEN_WIDTH OVER SDL_Rect-w int32<@ - SWAP SDL_Rect-x int32>!
             text-xvel NEGATE TO text-xvel
         ELSE
-            DUP SCREEN_WIDTH 3 PICK SDL_Rect-w int32<@ - > IF
-                DROP SCREEN_WIDTH OVER SDL_Rect-w int32<@ - SWAP SDL_Rect-x int32>!
-                text-xvel NEGATE TO text-xvel
-            ELSE
-                SWAP SDL_Rect-x int32>!
-            THEN
+            SWAP SDL_Rect-x int32>!
         THEN
+    THEN
 
-        text-rect DUP SDL_Rect-y int32<@ text-yvel +
-        DUP 0 < IF
-            DROP 0 SWAP SDL_Rect-y int32>!
+    text-rect DUP SDL_Rect-y int32<@ text-yvel +
+    DUP 0 < IF
+        DROP 0 SWAP SDL_Rect-y int32>!
+        text-yvel NEGATE TO text-yvel
+    ELSE
+        DUP SCREEN_HEIGHT 3 PICK SDL_Rect-h int32<@ - > IF
+            DROP SCREEN_HEIGHT OVER SDL_Rect-h int32<@ - SWAP SDL_Rect-y int32>!
             text-yvel NEGATE TO text-yvel
         ELSE
-            DUP SCREEN_HEIGHT 3 PICK SDL_Rect-h int32<@ - > IF
-                DROP SCREEN_HEIGHT OVER SDL_Rect-h int32<@ - SWAP SDL_Rect-y int32>!
-                text-yvel NEGATE TO text-yvel
-            ELSE
-                SWAP SDL_Rect-y int32>!
-            THEN
+            SWAP SDL_Rect-y int32>!
         THEN
-    ;
-
+    THEN
+;
+```
 ##
-
+```forth
     text-update
-
+```
 ##
-
+```forth
     renderer text-image NULL text-rect SDL_RenderCopy DROP
-
+```
 ##
-
+```forth
     create-text
-
+```
 #
