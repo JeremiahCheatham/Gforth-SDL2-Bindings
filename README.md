@@ -51,7 +51,7 @@ C version from https://wiki.libsdl.org/SDL2/SDL_CreateWindow
 
 Gforth version
 
-    S\"Window Title\0" DROP SDL_WINDOWPOS_CENTERED SDL_WINDOWPOS_CENTERED 800 600 0 SDL_CreateWindow window !
+    S\"Window Title\0" DROP SDL_WINDOWPOS_CENTERED SDL_WINDOWPOS_CENTERED 800 600 0 SDL_CreateWindow TO window
 
 ## To help working with C and SDL2
 `NULL` is used often it’s simply 0 but I have added a constant. To get strings back from SDL such as `SDL_GetError c-str>` will return a string length pair. To send strings into C functions, `>c-str` will take a string length pair and return a C style `NULL` terminated string. To convert Gforth’s 64bit signed to a 32bit size and store it in 4 bytes, `int32<!` this is used for setting `SDL_Rect` x, y, w, and h. To pull a number out, `int32<@` will put onto the stack a 64bit version.
@@ -90,8 +90,8 @@ As shown above, we will add in some helpers for working with C.
 We will need 2 variables that will hold the window and renderer pointers.
 
     \ Pointers for SDL window and renderer.
-    VARIABLE window
-    VARIABLE renderer
+    NULL VALUE window
+    NULL VALUE renderer
 
 ## A Word to Gracefully Cleanup and Exit the Game
 https://wiki.libsdl.org/SDL2/SDL_DestroyRenderer \
@@ -101,8 +101,8 @@ SDL allocates memory on the heap that needs to be manually freed. We will make a
 
     \ Release allocated memory for pointers and shutdown SDL correctly.
     : game-cleanup ( -- )
-        renderer @ SDL_DestroyRenderer
-        window @ SDL_DestroyWindow
+        renderer SDL_DestroyRenderer
+        window SDL_DestroyWindow
         SDL_Quit
         BYE
     ;
@@ -127,8 +127,8 @@ The `SDL_CreateWindow` function takes a C string, x and y window positions, w an
     \ Create the SDL2 Window and store the pointer in window. NULL/0 is returned if failed.
     : create-window ( -- )
         WINDOW_TITLE SDL_WINDOWPOS_CENTERED SDL_WINDOWPOS_CENTERED SCREEN_WIDTH SCREEN_HEIGHT 0
-        SDL_CreateWindow window !
-        window @ 0= IF 
+        SDL_CreateWindow TO window
+        window 0= IF 
             ." Error creating  window: " SDL_GetError c-str> TYPE CR
             game-cleanup
         THEN
@@ -140,8 +140,8 @@ The `SDL_CreateRenderer` takes in the window pointer and an optional flag. Like 
 
     \ Create the SDL Renderer and store the pointer in renderer. NULL/0 is returned if failed.
     : create-renderer ( -- )
-        window @ -1 0 SDL_CreateRenderer renderer !
-        renderer @ 0= IF
+        window -1 0 SDL_CreateRenderer TO renderer
+        renderer 0= IF
             ." Failed to create renderer: " SDL_GetError c-str> TYPE CR
             game-cleanup
         THEN
@@ -155,12 +155,12 @@ The `SDL_RenderClear` clears the renderer or backbuffer. It takes the renderer p
 
     : game-loop ( -- )
         \ Clears the back screen buffer.
-        renderer @ SDL_RenderClear DROP
+        renderer SDL_RenderClear DROP
     
         \ Do all your drawing here.
 
         \ Flips the front and back buffers, displays what has been drawn. 
-        renderer @ SDL_RenderPresent
+        renderer SDL_RenderPresent
 
         \ keeps window open for 5 seconds.
         5000 SDL_Delay
@@ -202,12 +202,12 @@ We will indent the previous code in the game loop and then put it inside of a `B
         BEGIN
             
             \ Clears the back screen buffer.
-            renderer @ SDL_RenderClear DROP
+            renderer SDL_RenderClear DROP
             
             \ Do all your drawing here.
     
             \ Flips the front and back buffers, displays what has been drawn. 
-            renderer @ SDL_RenderPresent
+            renderer SDL_RenderPresent
     
             \ 16ms delay in a loop is about 60 FPS.
             16 SDL_Delay
