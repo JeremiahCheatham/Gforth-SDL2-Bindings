@@ -242,31 +242,31 @@ gforth 02-close-window.fs
 # Draw A Background
 ## SDL_image library
 https://wiki.libsdl.org/SDL2_image/FrontPage \
-The SDL2 core library only has support for loading bitmap images. SDL_image is an extention that adds support for other image types, we will load png images. As in C you need to add `SDL_image.h`, in Forth `SDL_image.fs` will add the support.
+The SDL2 core library only has support for loading bitmap images. `SDL_image` is an extension that adds support for other image types, we will load PNG images. As in C, you need to add `SDL_image.h`, in Forth `SDL_image.fs` will add the support.
 ```forth
 require SDL2/SDL_image.fs
 ```
 ## IMG_Init flags
 https://wiki.libsdl.org/SDL2_image/IMG_Init \
-`IMG_Init` uses a flag to know what image capabilities to initialize. We will create a constant to hold the flag for png.
+`IMG_Init` uses a flag to initialize image capabilities. We will create a constant to hold the PNG flag.
 ```forth
 \ Flags for SDL_image
 IMG_INIT_PNG CONSTANT img-flags
 ```
 ## Background image pointer.
-Add a background VALUE initialized to 0/`NULL`. Add this to the VARIABLES and VALUES section.
+Add a background `VALUE` initialized to 0/`NULL`. Add this to the `VARIABLE`S and `VALUE`S section.
 ```forth
 NULL VALUE background
 ```
 ## Free memory allocated to SDL_Texture
 https://wiki.libsdl.org/SDL2/SDL_DestroyTexture \
-We need to free the memory allocated to `SDL_Texture`. Add this to the game-cleanup word.
+We need to free the memory allocated to `SDL_Texture`. Please add this to the `game-cleanup` word.
 ```forth
 background SDL_DestroyTexture
 ```
 ##
 https://wiki.libsdl.org/SDL2_image/IMG_Init \
-`IMG_Init` will take in the flags as a number. It will also return a number to the stack. We will mask that number with the original flags and then compare it to see if the flags we asked to be initialized were actually initialized. Since we are first masking it, if anything else was also intialized it wont affect the final answer.
+`IMG_Init` will take in the flags as a number and return a number to the stack. We will mask that number with the original flags and then compare it to see if the flags we asked to be initialized were actually initialized. Since we are first masking it, if anything else was also initialized, it won’t affect the final answer.
 ```forth
 \ flags are bitwise encoded. IMG_Init returns bitwise answer. Using flags to mask answer then compare to check.
 img-flags IMG_Init img-flags AND img-flags <> IF
@@ -276,7 +276,7 @@ THEN
 ```
 ##
 https://wiki.libsdl.org/SDL2_image/IMG_LoadTexture \
-`SDL_image` lets us load an image directly from a png to a hardware accelerated `SDL_Texture`. We need to pass the renderer and the c-string file name. This will return an address or 0/`NULL` if it has failed.
+`SDL_image` allows us to load an image directly from a PNG file to a hardware-accelerated `SDL_Texture`. We need to pass the `renderer` and the C-string file name. This will return an address or 0/`NULL` if it fails. Please add this code right above the `game-loop` word.
 ```forth
 : load-media ( -- )
     \ load an image directly to a hardware texture. NULL/0 is returned if failed.
@@ -286,6 +286,22 @@ https://wiki.libsdl.org/SDL2_image/IMG_LoadTexture \
         game-cleanup
     THEN
 ;
+```
+## Draw the Background
+In the `game-loop`, between `SDL_RenderClear` and `SDL_RenderPresent`, we will add `SDL_RenderCopy` and pass the `renderer` and `background` image to it. The two `NULL`s represent the source and destination `SDL_Rect`s. `NULL` means using the entire source and the entire destination.
+```forth
+        \ SDL_RenderCopy takes a source and destination rect. NULL will use entire space.
+        renderer background NULL NULL SDL_RenderCopy DROP
+```
+## Add load-media
+In the `game-play` word, add this entry right above `game-loop`.
+```forth
+    load-media
+```
+## Run
+Run the third example.
+```shell
+gforth 03-background.fs
 ```
 #
 ##
