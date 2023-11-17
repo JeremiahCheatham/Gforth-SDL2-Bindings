@@ -325,6 +325,7 @@ https://wiki.libsdl.org/SDL2/SDL_SetRenderDrawColor \
 ;
 ```
 ## Keyboard input
+https://wiki.libsdl.org/SDL2/SDL_Keycode \
 We will add a new `SDL_SCANCODE_SPACE` in the `game-loop`. We also need to add a `DUP` and `DROP` just above it. Now, whenever the space key is pressed, it will change the color of the `renderer`.
 ```forth
                 DUP SDL_SCANCODE_ESCAPE = IF
