@@ -1,5 +1,5 @@
 # SDL2 Bindings for Gforth
-A complete set of bindings for `SDL2`, `SDL_image`, `SDL_mixer`, and `SDL_ttf`. Note that these are simply the SDL2 Gforth bindings. SDL2 with headerfiles needs to be installed and added to your library and include paths. For example on ArchLinux simply installing sdl2, sdl2_image, sdl2_mixer, sdl2_ttf packages are all you need.
+A complete set of bindings for `SDL2`, `SDL_image`, `SDL_mixer`, and `SDL_ttf`. Note that these are simply the SDL2 Gforth bindings. SDL2 with headerfiles needs to be installed and added to your library and include paths. For example on ArchLinux simply installing sdl2, sdl2_image, sdl2_mixer, sdl2_ttf packages and Gforth 0.7.3 are all you need. Again these are only bindings so you will need to have Gforth and SDL2 with headerfiles installed and in your systems searchable path. This is assuming SDL2 is in the standard SDL2 folder.
 
 ## SDL Event Enum name collisions.
 Because Forth is not case-sensitive, there are some naming collisions with the Event Enums. For example, the function `SDL_Quit` and the Event Enum `SDL_QUIT` are viewed as the same. For the 6 Event Enums, _ENUM has been added to their names. The `SDL_Quit` function will still close SDL, but for checking if an `SDL_QUIT` event has occurred, `SDL_QUIT_ENUM` is used.
