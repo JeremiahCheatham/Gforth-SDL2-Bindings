@@ -303,25 +303,29 @@ Run the third example.
 ```shell
 gforth 03-background.fs
 ```
-#
-##
+# Change Background Color
+## Include Random
+We need random numbers, so we will include the `random.fs` library.
 ```forth
 require random.fs
 ```
-##
+## Seed Random
+We will use `utime` to seed `random`. However, after seeding `random`, it still produces the same first number. So, we will generate a `random` number and `drop` it right away.
 ```forth
 \ Seed the random generator, throw away the first number.
 utime DROP seed ! rnd DROP
 ```
-##
-https://wiki.libsdl.org/SDL2/SDL_SetRenderDrawColor
+## Set a random color
+https://wiki.libsdl.org/SDL2/SDL_SetRenderDrawColor \
+`SDL_SetRenderDrawColor` is used to set the color of the `renderer`. Since the `background` image we loaded has transparency, the `renderer` can still be seen. The function takes Red, Green, Blue, and Alpha values, all between 0 and 255. We will assign a `random` number to each of the three colors.
 ```forth
 \ set a random number from 0 to 255 for red, green, blue and set alpha to 255 for the renderer.
 : random-color-renderer ( -- )
     renderer 256 random 256 random 256 random 255 SDL_SetRenderDrawColor DROP
 ;
 ```
-##
+## Keyboard input
+We will add a new `SDL_SCANCODE_SPACE` in the `game-loop`. We also need to add a `DUP` and `DROP` just above it. Now, whenever the space key is pressed, it will change the color of the `renderer`.
 ```forth
                 DUP SDL_SCANCODE_ESCAPE = IF
                     DROP game-cleanup
@@ -330,7 +334,11 @@ https://wiki.libsdl.org/SDL2/SDL_SetRenderDrawColor
                     random-color-renderer
                 THEN
 ```
-#
+## Run the example
+```forth
+gforth 04-colors.fs
+```
+# True Type Font Text.
 ##
 ```forth
 require SDL2/SDL_ttf.fs
