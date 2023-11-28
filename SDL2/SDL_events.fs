@@ -73,305 +73,337 @@ s" SDL2" add-lib
 #32512	constant SDL_POLLSENTINEL
 #32768	constant SDL_USEREVENT_ENUM
 #65535	constant SDL_LASTEVENT
-#0	constant SDL_ADDEVENT
-#1	constant SDL_PEEKEVENT
-#2	constant SDL_GETEVENT
+#0      constant SDL_ADDEVENT
+#1      constant SDL_PEEKEVENT
+#2      constant SDL_GETEVENT
 
 \ -------===< structs >===--------
+
 \ struct SDL_CommonEvent
 begin-structure SDL_CommonEvent
-	drop 0 4 +field SDL_CommonEvent-type
-	drop 4 4 +field SDL_CommonEvent-timestamp
-drop 8 end-structure
+	c-uint32:   SDL_CommonEvent-type
+	c-uint32:   SDL_CommonEvent-timestamp
+end-structure
+
 \ struct SDL_DisplayEvent
 begin-structure SDL_DisplayEvent
-	drop 8 4 +field SDL_DisplayEvent-display
-	drop 0 4 +field SDL_DisplayEvent-type
-	drop 13 1 +field SDL_DisplayEvent-padding1
-	drop 16 4 +field SDL_DisplayEvent-data1
-	drop 4 4 +field SDL_DisplayEvent-timestamp
-	drop 14 1 +field SDL_DisplayEvent-padding2
-	drop 12 1 +field SDL_DisplayEvent-event
-	drop 15 1 +field SDL_DisplayEvent-padding3
-drop 20 end-structure
+	c-uint32:   SDL_DisplayEvent-type
+	c-uint32:   SDL_DisplayEvent-timestamp
+	c-uint32:   SDL_DisplayEvent-display
+	c-uint8:    SDL_DisplayEvent-event
+	c-uint8:    SDL_DisplayEvent-padding1
+	c-uint8:    SDL_DisplayEvent-padding2
+	c-uint8:    SDL_DisplayEvent-padding3
+	c-sint32:   SDL_DisplayEvent-data1
+end-structure
+
 \ struct SDL_WindowEvent
 begin-structure SDL_WindowEvent
-	drop 8 4 +field SDL_WindowEvent-windowID
-	drop 0 4 +field SDL_WindowEvent-type
-	drop 13 1 +field SDL_WindowEvent-padding1
-	drop 16 4 +field SDL_WindowEvent-data1
-	drop 4 4 +field SDL_WindowEvent-timestamp
-	drop 14 1 +field SDL_WindowEvent-padding2
-	drop 20 4 +field SDL_WindowEvent-data2
-	drop 12 1 +field SDL_WindowEvent-event
-	drop 15 1 +field SDL_WindowEvent-padding3
-drop 24 end-structure
+	c-uint32:   SDL_WindowEvent-type
+	c-uint32:   SDL_WindowEvent-timestamp
+	c-uint32:   SDL_WindowEvent-windowID
+	c-uint8:    SDL_WindowEvent-event
+	c-uint8:    SDL_WindowEvent-padding1
+	c-uint8:    SDL_WindowEvent-padding2
+	c-uint8:    SDL_WindowEvent-padding3
+	c-sint32:   SDL_WindowEvent-data1
+	c-sint32:   SDL_WindowEvent-data2
+end-structure
+
 \ struct SDL_KeyboardEvent
-begin-structure SDL_KeyboardEvent
-	drop 8 4 +field SDL_KeyboardEvent-windowID
-	drop 0 4 +field SDL_KeyboardEvent-type
-	drop 4 4 +field SDL_KeyboardEvent-timestamp
-	drop 12 1 +field SDL_KeyboardEvent-state
-	drop 14 1 +field SDL_KeyboardEvent-padding2
-	drop 13 1 +field SDL_KeyboardEvent-repeat
-	drop 15 1 +field SDL_KeyboardEvent-padding3
-	drop 16 16 +field SDL_KeyboardEvent-keysym
-drop 32 end-structure
+begin-structure         SDL_KeyboardEvent
+	c-uint32:           SDL_KeyboardEvent-type
+	c-uint32:           SDL_KeyboardEvent-timestamp
+	c-uint32:           SDL_KeyboardEvent-windowID
+	c-uint8:            SDL_KeyboardEvent-state
+	c-uint8:            SDL_KeyboardEvent-repeat
+	c-uint8:            SDL_KeyboardEvent-padding2
+	c-uint8:            SDL_KeyboardEvent-padding3
+	SDL_Keysym bytes:   SDL_KeyboardEvent-keysym
+end-structure
+
 \ struct SDL_TextEditingEvent
 begin-structure SDL_TextEditingEvent
-	drop 8 4 +field SDL_TextEditingEvent-windowID
-	drop 0 4 +field SDL_TextEditingEvent-type
-	drop 12 32 +field SDL_TextEditingEvent-text
-	drop 48 4 +field SDL_TextEditingEvent-length
-	drop 4 4 +field SDL_TextEditingEvent-timestamp
-	drop 44 4 +field SDL_TextEditingEvent-start
-drop 52 end-structure
+	c-uint32:   SDL_TextEditingEvent-type
+	c-uint32:   SDL_TextEditingEvent-timestamp
+	c-uint32:   SDL_TextEditingEvent-windowID
+	32 c-chars: SDL_TextEditingEvent-text
+	c-sint32:   SDL_TextEditingEvent-start
+	c-sint32:   SDL_TextEditingEvent-length
+end-structure
+
 \ struct SDL_TextEditingExtEvent
 begin-structure SDL_TextEditingExtEvent
-	drop 8 4 +field SDL_TextEditingExtEvent-windowID
-	drop 0 4 +field SDL_TextEditingExtEvent-type
-	drop 16 8 +field SDL_TextEditingExtEvent-text
-	drop 28 4 +field SDL_TextEditingExtEvent-length
-	drop 4 4 +field SDL_TextEditingExtEvent-timestamp
-	drop 24 4 +field SDL_TextEditingExtEvent-start
-drop 32 end-structure
+	c-uint32:   SDL_TextEditingExtEvent-type
+	c-uint32:   SDL_TextEditingExtEvent-timestamp
+	c-uint32:   SDL_TextEditingExtEvent-windowID
+	c-char-ptr: SDL_TextEditingExtEvent-text
+	c-sint32:   SDL_TextEditingExtEvent-start
+	c-sint32:   SDL_TextEditingExtEvent-length
+end-structure
+
 \ struct SDL_TextInputEvent
 begin-structure SDL_TextInputEvent
-	drop 8 4 +field SDL_TextInputEvent-windowID
-	drop 0 4 +field SDL_TextInputEvent-type
-	drop 12 32 +field SDL_TextInputEvent-text
-	drop 4 4 +field SDL_TextInputEvent-timestamp
-drop 44 end-structure
+	c-uint32:   SDL_TextInputEvent-type
+	c-uint32:   SDL_TextInputEvent-timestamp
+	c-uint32:   SDL_TextInputEvent-windowID
+	32 bytes:   SDL_TextInputEvent-text
+end-structure
+
 \ struct SDL_MouseMotionEvent
 begin-structure SDL_MouseMotionEvent
-	drop 32 4 +field SDL_MouseMotionEvent-yrel
-	drop 20 4 +field SDL_MouseMotionEvent-x
-	drop 12 4 +field SDL_MouseMotionEvent-which
-	drop 24 4 +field SDL_MouseMotionEvent-y
-	drop 8 4 +field SDL_MouseMotionEvent-windowID
-	drop 0 4 +field SDL_MouseMotionEvent-type
-	drop 4 4 +field SDL_MouseMotionEvent-timestamp
-	drop 16 4 +field SDL_MouseMotionEvent-state
-	drop 28 4 +field SDL_MouseMotionEvent-xrel
-drop 36 end-structure
+	c-uint32:   SDL_MouseMotionEvent-type
+	c-uint32:   SDL_MouseMotionEvent-timestamp
+	c-uint32:   SDL_MouseMotionEvent-windowID
+	c-uint32:   SDL_MouseMotionEvent-which
+	c-uint32:   SDL_MouseMotionEvent-state
+	c-sint32:   SDL_MouseMotionEvent-x
+	c-sint32:   SDL_MouseMotionEvent-y
+	c-sint32:   SDL_MouseMotionEvent-xrel
+	c-sint32:   SDL_MouseMotionEvent-yrel
+end-structure
+
 \ struct SDL_MouseButtonEvent
 begin-structure SDL_MouseButtonEvent
-	drop 20 4 +field SDL_MouseButtonEvent-x
-	drop 12 4 +field SDL_MouseButtonEvent-which
-	drop 24 4 +field SDL_MouseButtonEvent-y
-	drop 8 4 +field SDL_MouseButtonEvent-windowID
-	drop 16 1 +field SDL_MouseButtonEvent-button
-	drop 0 4 +field SDL_MouseButtonEvent-type
-	drop 18 1 +field SDL_MouseButtonEvent-clicks
-	drop 19 1 +field SDL_MouseButtonEvent-padding1
-	drop 4 4 +field SDL_MouseButtonEvent-timestamp
-	drop 17 1 +field SDL_MouseButtonEvent-state
-drop 28 end-structure
+	c-uint32:   SDL_MouseButtonEvent-type
+	c-uint32:   SDL_MouseButtonEvent-timestamp
+	c-uint32:   SDL_MouseButtonEvent-windowID
+	c-uint32:   SDL_MouseButtonEvent-which
+	c-uint8:    SDL_MouseButtonEvent-button
+	c-uint8:    SDL_MouseButtonEvent-state
+	c-uint8:    SDL_MouseButtonEvent-clicks
+	c-uint8:    SDL_MouseButtonEvent-padding1
+	c-sint32:   SDL_MouseButtonEvent-x
+	c-sint32:   SDL_MouseButtonEvent-y
+end-structure
+
 \ struct SDL_MouseWheelEvent
 begin-structure SDL_MouseWheelEvent
-	drop 16 4 +field SDL_MouseWheelEvent-x
-	drop 36 4 +field SDL_MouseWheelEvent-mouseX
-	drop 12 4 +field SDL_MouseWheelEvent-which
-	drop 20 4 +field SDL_MouseWheelEvent-y
-	drop 28 4 +field SDL_MouseWheelEvent-preciseX
-	drop 40 4 +field SDL_MouseWheelEvent-mouseY
-	drop 8 4 +field SDL_MouseWheelEvent-windowID
-	drop 32 4 +field SDL_MouseWheelEvent-preciseY
-	drop 0 4 +field SDL_MouseWheelEvent-type
-	drop 4 4 +field SDL_MouseWheelEvent-timestamp
-	drop 24 4 +field SDL_MouseWheelEvent-direction
-drop 44 end-structure
+	c-uint32:   SDL_MouseWheelEvent-type
+	c-uint32:   SDL_MouseWheelEvent-timestamp
+	c-uint32:   SDL_MouseWheelEvent-windowID
+	c-uint32:   SDL_MouseWheelEvent-which
+	c-sint32:   SDL_MouseWheelEvent-x
+	c-sint32:   SDL_MouseWheelEvent-y
+	c-uint32:   SDL_MouseWheelEvent-direction
+	c-float:    SDL_MouseWheelEvent-preciseX
+	c-float:    SDL_MouseWheelEvent-preciseY
+	c-sint32:   SDL_MouseWheelEvent-mouseX
+	c-sint32:   SDL_MouseWheelEvent-mouseY
+end-structure
+
 \ struct SDL_JoyAxisEvent
 begin-structure SDL_JoyAxisEvent
-	drop 18 2 +field SDL_JoyAxisEvent-padding4
-	drop 8 4 +field SDL_JoyAxisEvent-which
-	drop 16 2 +field SDL_JoyAxisEvent-value
-	drop 0 4 +field SDL_JoyAxisEvent-type
-	drop 12 1 +field SDL_JoyAxisEvent-axis
-	drop 13 1 +field SDL_JoyAxisEvent-padding1
-	drop 4 4 +field SDL_JoyAxisEvent-timestamp
-	drop 14 1 +field SDL_JoyAxisEvent-padding2
-	drop 15 1 +field SDL_JoyAxisEvent-padding3
-drop 20 end-structure
+	c-uint32:   SDL_JoyAxisEvent-type
+	c-uint32:   SDL_JoyAxisEvent-timestamp
+	c-sint32:   SDL_JoyAxisEvent-which
+	c-uint8:    SDL_JoyAxisEvent-axis
+	c-uint8:    SDL_JoyAxisEvent-padding1
+	c-uint8:    SDL_JoyAxisEvent-padding2
+	c-uint8:    SDL_JoyAxisEvent-padding3
+	c-sint16:   SDL_JoyAxisEvent-value
+	c-uint16:   SDL_JoyAxisEvent-padding4
+end-structure
+
 \ struct SDL_JoyBallEvent
 begin-structure SDL_JoyBallEvent
-	drop 18 2 +field SDL_JoyBallEvent-yrel
-	drop 8 4 +field SDL_JoyBallEvent-which
-	drop 0 4 +field SDL_JoyBallEvent-type
-	drop 13 1 +field SDL_JoyBallEvent-padding1
-	drop 4 4 +field SDL_JoyBallEvent-timestamp
-	drop 14 1 +field SDL_JoyBallEvent-padding2
-	drop 12 1 +field SDL_JoyBallEvent-ball
-	drop 15 1 +field SDL_JoyBallEvent-padding3
-	drop 16 2 +field SDL_JoyBallEvent-xrel
-drop 20 end-structure
+	c-uint32:   SDL_JoyBallEvent-type
+	c-uint32:   SDL_JoyBallEvent-timestamp
+	c-sint32:   SDL_JoyBallEvent-which
+	c-uint8:    SDL_JoyBallEvent-ball
+	c-uint8:    SDL_JoyBallEvent-padding1
+	c-uint8:    SDL_JoyBallEvent-padding2
+	c-uint8:    SDL_JoyBallEvent-padding3
+	c-sint16:   SDL_JoyBallEvent-xrel
+	c-sint16:   SDL_JoyBallEvent-yrel
+end-structure
+
 \ struct SDL_JoyHatEvent
 begin-structure SDL_JoyHatEvent
-	drop 8 4 +field SDL_JoyHatEvent-which
-	drop 13 1 +field SDL_JoyHatEvent-value
-	drop 0 4 +field SDL_JoyHatEvent-type
-	drop 14 1 +field SDL_JoyHatEvent-padding1
-	drop 4 4 +field SDL_JoyHatEvent-timestamp
-	drop 12 1 +field SDL_JoyHatEvent-hat
-	drop 15 1 +field SDL_JoyHatEvent-padding2
-drop 16 end-structure
+	c-uint32:   SDL_JoyHatEvent-type
+	c-uint32:   SDL_JoyHatEvent-timestamp
+	c-sint32:   SDL_JoyHatEvent-which
+	c-uint8:    SDL_JoyHatEvent-hat
+	c-uint8:    SDL_JoyHatEvent-value
+	c-uint8:    SDL_JoyHatEvent-padding1
+	c-uint8:    SDL_JoyHatEvent-padding2
+end-structure
+
 \ struct SDL_JoyButtonEvent
 begin-structure SDL_JoyButtonEvent
-	drop 8 4 +field SDL_JoyButtonEvent-which
-	drop 12 1 +field SDL_JoyButtonEvent-button
-	drop 0 4 +field SDL_JoyButtonEvent-type
-	drop 14 1 +field SDL_JoyButtonEvent-padding1
-	drop 4 4 +field SDL_JoyButtonEvent-timestamp
-	drop 13 1 +field SDL_JoyButtonEvent-state
-	drop 15 1 +field SDL_JoyButtonEvent-padding2
-drop 16 end-structure
+	c-uint32:   SDL_JoyButtonEvent-type
+	c-uint32:   SDL_JoyButtonEvent-timestamp
+	c-sint32:   SDL_JoyButtonEvent-which
+	c-uint8:    SDL_JoyButtonEvent-button
+	c-uint8:    SDL_JoyButtonEvent-state
+	c-uint8:    SDL_JoyButtonEvent-padding1
+	c-uint8:    SDL_JoyButtonEvent-padding2
+end-structure
+
 \ struct SDL_JoyDeviceEvent
 begin-structure SDL_JoyDeviceEvent
-	drop 8 4 +field SDL_JoyDeviceEvent-which
-	drop 0 4 +field SDL_JoyDeviceEvent-type
-	drop 4 4 +field SDL_JoyDeviceEvent-timestamp
-drop 12 end-structure
+	c-uint32:   SDL_JoyDeviceEvent-type
+	c-uint32:   SDL_JoyDeviceEvent-timestamp
+	c-sint32:   SDL_JoyDeviceEvent-which
+end-structure
+
 \ struct SDL_JoyBatteryEvent
 begin-structure SDL_JoyBatteryEvent
-	drop 12 4 +field SDL_JoyBatteryEvent-level
-	drop 8 4 +field SDL_JoyBatteryEvent-which
-	drop 0 4 +field SDL_JoyBatteryEvent-type
-	drop 4 4 +field SDL_JoyBatteryEvent-timestamp
-drop 16 end-structure
+	c-uint32:   SDL_JoyBatteryEvent-type
+	c-uint32:   SDL_JoyBatteryEvent-timestamp
+	c-sint32:   SDL_JoyBatteryEvent-which
+	4 bytes:    SDL_JoyBatteryEvent-level
+end-structure
+
 \ struct SDL_ControllerAxisEvent
 begin-structure SDL_ControllerAxisEvent
-	drop 18 2 +field SDL_ControllerAxisEvent-padding4
-	drop 8 4 +field SDL_ControllerAxisEvent-which
-	drop 16 2 +field SDL_ControllerAxisEvent-value
-	drop 0 4 +field SDL_ControllerAxisEvent-type
-	drop 12 1 +field SDL_ControllerAxisEvent-axis
-	drop 13 1 +field SDL_ControllerAxisEvent-padding1
-	drop 4 4 +field SDL_ControllerAxisEvent-timestamp
-	drop 14 1 +field SDL_ControllerAxisEvent-padding2
-	drop 15 1 +field SDL_ControllerAxisEvent-padding3
-drop 20 end-structure
+	c-uint32:   SDL_ControllerAxisEvent-type
+	c-uint32:   SDL_ControllerAxisEvent-timestamp
+	c-sint32:   SDL_ControllerAxisEvent-which
+	c-uint8:    SDL_ControllerAxisEvent-axis
+	c-uint8:    SDL_ControllerAxisEvent-padding1
+	c-uint8:    SDL_ControllerAxisEvent-padding2
+	c-uint8:    SDL_ControllerAxisEvent-padding3
+	c-sint16:   SDL_ControllerAxisEvent-value
+	c-uint16:   SDL_ControllerAxisEvent-padding4
+end-structure
+
 \ struct SDL_ControllerButtonEvent
 begin-structure SDL_ControllerButtonEvent
-	drop 8 4 +field SDL_ControllerButtonEvent-which
-	drop 12 1 +field SDL_ControllerButtonEvent-button
-	drop 0 4 +field SDL_ControllerButtonEvent-type
-	drop 14 1 +field SDL_ControllerButtonEvent-padding1
-	drop 4 4 +field SDL_ControllerButtonEvent-timestamp
-	drop 13 1 +field SDL_ControllerButtonEvent-state
-	drop 15 1 +field SDL_ControllerButtonEvent-padding2
-drop 16 end-structure
+	c-uint32:   SDL_ControllerButtonEvent-type
+	c-uint32:   SDL_ControllerButtonEvent-timestamp
+	c-sint32:   SDL_ControllerButtonEvent-which
+	c-uint8:    SDL_ControllerButtonEvent-button
+	c-uint8:    SDL_ControllerButtonEvent-state
+	c-uint8:    SDL_ControllerButtonEvent-padding1
+	c-uint8:    SDL_ControllerButtonEvent-padding2
+end-structure
+
 \ struct SDL_ControllerDeviceEvent
 begin-structure SDL_ControllerDeviceEvent
-	drop 8 4 +field SDL_ControllerDeviceEvent-which
-	drop 0 4 +field SDL_ControllerDeviceEvent-type
-	drop 4 4 +field SDL_ControllerDeviceEvent-timestamp
-drop 12 end-structure
+	c-uint32:   SDL_ControllerDeviceEvent-type
+	c-uint32:   SDL_ControllerDeviceEvent-timestamp
+	c-sint32:   SDL_ControllerDeviceEvent-which
+end-structure
+
 \ struct SDL_ControllerTouchpadEvent
 begin-structure SDL_ControllerTouchpadEvent
-	drop 16 4 +field SDL_ControllerTouchpadEvent-finger
-	drop 12 4 +field SDL_ControllerTouchpadEvent-touchpad
-	drop 20 4 +field SDL_ControllerTouchpadEvent-x
-	drop 8 4 +field SDL_ControllerTouchpadEvent-which
-	drop 24 4 +field SDL_ControllerTouchpadEvent-y
-	drop 0 4 +field SDL_ControllerTouchpadEvent-type
-	drop 4 4 +field SDL_ControllerTouchpadEvent-timestamp
-	drop 28 4 +field SDL_ControllerTouchpadEvent-pressure
-drop 32 end-structure
+	c-uint32:   SDL_ControllerTouchpadEvent-type
+	c-uint32:   SDL_ControllerTouchpadEvent-timestamp
+	c-sint32:   SDL_ControllerTouchpadEvent-which
+	c-sint32:   SDL_ControllerTouchpadEvent-touchpad
+	c-sint32:   SDL_ControllerTouchpadEvent-finger
+	c-float:    SDL_ControllerTouchpadEvent-x
+	c-float:    SDL_ControllerTouchpadEvent-y
+	c-float:    SDL_ControllerTouchpadEvent-pressure
+end-structure
+
 \ struct SDL_ControllerSensorEvent
 begin-structure SDL_ControllerSensorEvent
-	drop 16 12 +field SDL_ControllerSensorEvent-data
-	drop 32 8 +field SDL_ControllerSensorEvent-timestamp_us
-	drop 8 4 +field SDL_ControllerSensorEvent-which
-	drop 0 4 +field SDL_ControllerSensorEvent-type
-	drop 12 4 +field SDL_ControllerSensorEvent-sensor
-	drop 4 4 +field SDL_ControllerSensorEvent-timestamp
-drop 40 end-structure
+	c-uint32:   SDL_ControllerSensorEvent-type
+	c-uint32:   SDL_ControllerSensorEvent-timestamp
+	c-sint32:   SDL_ControllerSensorEvent-which
+	c-sint32:   SDL_ControllerSensorEvent-sensor
+	3 c-floats: SDL_ControllerSensorEvent-data
+	c-uint64:   SDL_ControllerSensorEvent-timestamp_us
+end-structure
+
 \ struct SDL_AudioDeviceEvent
 begin-structure SDL_AudioDeviceEvent
-	drop 8 4 +field SDL_AudioDeviceEvent-which
-	drop 0 4 +field SDL_AudioDeviceEvent-type
-	drop 13 1 +field SDL_AudioDeviceEvent-padding1
-	drop 4 4 +field SDL_AudioDeviceEvent-timestamp
-	drop 14 1 +field SDL_AudioDeviceEvent-padding2
-	drop 12 1 +field SDL_AudioDeviceEvent-iscapture
-	drop 15 1 +field SDL_AudioDeviceEvent-padding3
-drop 16 end-structure
+	c-uint32:   SDL_AudioDeviceEvent-type
+	c-uint32:   SDL_AudioDeviceEvent-timestamp
+	c-uint32:   SDL_AudioDeviceEvent-which
+	c-uint8:    SDL_AudioDeviceEvent-iscapture
+	c-uint8:    SDL_AudioDeviceEvent-padding1
+	c-uint8:    SDL_AudioDeviceEvent-padding2
+	c-uint8:    SDL_AudioDeviceEvent-padding3
+end-structure
+
 \ struct SDL_TouchFingerEvent
 begin-structure SDL_TouchFingerEvent
-	drop 8 8 +field SDL_TouchFingerEvent-touchId
-	drop 24 4 +field SDL_TouchFingerEvent-x
-	drop 28 4 +field SDL_TouchFingerEvent-y
-	drop 32 4 +field SDL_TouchFingerEvent-dx
-	drop 36 4 +field SDL_TouchFingerEvent-dy
-	drop 44 4 +field SDL_TouchFingerEvent-windowID
-	drop 0 4 +field SDL_TouchFingerEvent-type
-	drop 4 4 +field SDL_TouchFingerEvent-timestamp
-	drop 40 4 +field SDL_TouchFingerEvent-pressure
-	drop 16 8 +field SDL_TouchFingerEvent-fingerId
-drop 48 end-structure
+	c-uint32:   SDL_TouchFingerEvent-type
+	c-uint32:   DL_TouchFingerEvent-timestamp
+	c-sint64:   SDL_TouchFingerEvent-touchId
+	c-sint64:   SDL_TouchFingerEvent-fingerId
+	c-float:    SDL_TouchFingerEvent-x
+	c-float:    SDL_TouchFingerEvent-y
+	c-float:    SDL_TouchFingerEvent-dx
+	c-float:    SDL_TouchFingerEvent-dy
+	c-float:    SDL_TouchFingerEvent-pressure
+	c-uint32:   SDL_TouchFingerEvent-windowID
+end-structure
+
 \ struct SDL_MultiGestureEvent
 begin-structure SDL_MultiGestureEvent
-	drop 8 8 +field SDL_MultiGestureEvent-touchId
-	drop 16 4 +field SDL_MultiGestureEvent-dTheta
-	drop 20 4 +field SDL_MultiGestureEvent-dDist
-	drop 24 4 +field SDL_MultiGestureEvent-x
-	drop 28 4 +field SDL_MultiGestureEvent-y
-	drop 34 2 +field SDL_MultiGestureEvent-padding
-	drop 0 4 +field SDL_MultiGestureEvent-type
-	drop 4 4 +field SDL_MultiGestureEvent-timestamp
-	drop 32 2 +field SDL_MultiGestureEvent-numFingers
-drop 40 end-structure
+	c-uint32:   SDL_MultiGestureEvent-type
+	c-uint32:   SDL_MultiGestureEvent-timestamp
+	c-sint64:   SDL_MultiGestureEvent-touchId
+	c-float:    SDL_MultiGestureEvent-dTheta
+	c-float:    SDL_MultiGestureEvent-dDist
+	c-float:    SDL_MultiGestureEvent-x
+	c-float:    SDL_MultiGestureEvent-y
+	c-uint16:   SDL_MultiGestureEvent-numFingers
+	c-uint16:   SDL_MultiGestureEvent-padding
+end-structure
+
 \ struct SDL_DollarGestureEvent
 begin-structure SDL_DollarGestureEvent
-	drop 8 8 +field SDL_DollarGestureEvent-touchId
-	drop 32 4 +field SDL_DollarGestureEvent-x
-	drop 28 4 +field SDL_DollarGestureEvent-error
-	drop 36 4 +field SDL_DollarGestureEvent-y
-	drop 0 4 +field SDL_DollarGestureEvent-type
-	drop 4 4 +field SDL_DollarGestureEvent-timestamp
-	drop 16 8 +field SDL_DollarGestureEvent-gestureId
-	drop 24 4 +field SDL_DollarGestureEvent-numFingers
-drop 40 end-structure
+	c-uint32:   SDL_DollarGestureEvent-type
+	c-uint32:   SDL_DollarGestureEvent-timestamp
+	c-sint64:   SDL_DollarGestureEvent-touchId
+	c-sint64:   SDL_DollarGestureEvent-gestureId
+	c-uint32:   SDL_DollarGestureEvent-numFingers
+	c-float:    SDL_DollarGestureEvent-error
+	c-float:    SDL_DollarGestureEvent-x
+	c-float:    SDL_DollarGestureEvent-y
+end-structure
+
 \ struct SDL_DropEvent
 begin-structure SDL_DropEvent
-	drop 16 4 +field SDL_DropEvent-windowID
-	drop 0 4 +field SDL_DropEvent-type
-	drop 4 4 +field SDL_DropEvent-timestamp
-	drop 8 8 +field SDL_DropEvent-file
-drop 24 end-structure
+	c-uint32:   SDL_DropEvent-type
+	c-uint32:   SDL_DropEvent-timestamp
+	c-char-ptr: SDL_DropEvent-file
+	c-uint32:   SDL_DropEvent-windowID
+end-structure
+
 \ struct SDL_SensorEvent
 begin-structure SDL_SensorEvent
-	drop 12 24 +field SDL_SensorEvent-data
-	drop 40 8 +field SDL_SensorEvent-timestamp_us
-	drop 8 4 +field SDL_SensorEvent-which
-	drop 0 4 +field SDL_SensorEvent-type
-	drop 4 4 +field SDL_SensorEvent-timestamp
-drop 48 end-structure
+	c-uint32:   SDL_SensorEvent-type
+	c-uint32:   SDL_SensorEvent-timestamp
+	c-sint32:   SDL_SensorEvent-which
+	6 c-floats: SDL_SensorEvent-data
+	c-uint64:   SDL_SensorEvent-timestamp_us
+end-structure
+
 \ struct SDL_QuitEvent
 begin-structure SDL_QuitEvent
-	drop 0 4 +field SDL_QuitEvent-type
-	drop 4 4 +field SDL_QuitEvent-timestamp
-drop 8 end-structure
+	c-uint32:   SDL_QuitEvent-type
+	c-uint32:   SDL_QuitEvent-timestamp
+end-structure
+
 \ struct SDL_OSEvent
 begin-structure SDL_OSEvent
-	drop 0 4 +field SDL_OSEvent-type
-	drop 4 4 +field SDL_OSEvent-timestamp
-drop 8 end-structure
+	c-uint32:   SDL_OSEvent-type
+	c-uint32:   SDL_OSEvent-timestamp
+end-structure
+
 \ struct SDL_UserEvent
 begin-structure SDL_UserEvent
-	drop 8 4 +field SDL_UserEvent-windowID
-	drop 12 4 +field SDL_UserEvent-code
-	drop 0 4 +field SDL_UserEvent-type
-	drop 16 8 +field SDL_UserEvent-data1
-	drop 4 4 +field SDL_UserEvent-timestamp
-	drop 24 8 +field SDL_UserEvent-data2
-drop 32 end-structure
+	c-uint32:   SDL_UserEvent-type
+	c-uint32:   SDL_UserEvent-timestamp
+	c-uint32:   SDL_UserEvent-windowID
+	c-sint32:   SDL_UserEvent-code
+	c-pointer:  SDL_UserEvent-data1
+	c-pointer:  SDL_UserEvent-data2
+end-structure
+
 \ struct SDL_SysWMEvent
 begin-structure SDL_SysWMEvent
-	drop 0 4 +field SDL_SysWMEvent-type
-	drop 8 8 +field SDL_SysWMEvent-msg
-	drop 4 4 +field SDL_SysWMEvent-timestamp
-drop 16 end-structure
+	c-uint32:   SDL_SysWMEvent-type
+	c-uint32:   SDL_SysWMEvent-timestamp
+	c-pointer:  SDL_SysWMEvent-msg
+end-structure
+
 \ union SDL_Event
 begin-structure SDL_Event
 	drop 0 16 +field SDL_Event-jhat

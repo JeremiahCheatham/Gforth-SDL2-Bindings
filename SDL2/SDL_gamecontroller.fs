@@ -55,22 +55,25 @@ s" SDL2" add-lib
 #21	constant SDL_CONTROLLER_BUTTON_MAX
 
 \ -------===< structs >===--------
+
 \ struct SDL_GameControllerButtonBind
 begin-structure SDL_GameControllerButtonBind
-	drop 0 4 +field SDL_GameControllerButtonBind-bindType
-	drop 4 8 +field SDL_GameControllerButtonBind-value
-drop 12 end-structure
+	c-sint32:           SDL_GameControllerButtonBind-bindType
+	c-sint32 2 * +field SDL_GameControllerButtonBind-value
+end-structure
+
 \ SDL_GameControllerButtonBind_value
 begin-structure SDL_GameControllerButtonBind_value
 	drop 0 4 +field SDL_GameControllerButtonBind_value-button
 	drop 0 4 +field SDL_GameControllerButtonBind_value-axis
 	drop 0 8 +field SDL_GameControllerButtonBind_value-hat
-drop 8 end-structure
+end-structure
+
 \ SDL_GameControllerButtonBind_value_hat
 begin-structure SDL_GameControllerButtonBind_value_hat
-	drop 4 4 +field SDL_GameControllerButtonBind_value_hat-hat_mask
-	drop 0 4 +field SDL_GameControllerButtonBind_value_hat-hat
-drop 8 end-structure
+	c-sint32:   SDL_GameControllerButtonBind_value_hat-hat
+	c-sint32:   SDL_GameControllerButtonBind_value_hat-hat_mask
+end-structure
 
 \ ------===< functions >===-------
 c-function SDL_GameControllerAddMappingsFromRW SDL_GameControllerAddMappingsFromRW a n -- n	( rw freerw -- )

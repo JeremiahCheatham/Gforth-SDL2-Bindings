@@ -5,8 +5,6 @@ c-library sdl_error
 s" SDL2" add-lib
 \c #include <SDL2/SDL_error.h>
 
-\ ----===< int constants >===-----
-
 \ --------===< enums >===---------
 #0	constant SDL_ENOMEM
 #1	constant SDL_EFREAD

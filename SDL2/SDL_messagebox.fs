@@ -19,32 +19,36 @@ s" SDL2" add-lib
 #5	constant SDL_MESSAGEBOX_COLOR_MAX
 
 \ -------===< structs >===--------
+
 \ SDL_MessageBoxButtonData
 begin-structure SDL_MessageBoxButtonData
-	drop 4 4 +field SDL_MessageBoxButtonData-buttonid
-	drop 8 8 +field SDL_MessageBoxButtonData-text
-	drop 0 4 +field SDL_MessageBoxButtonData-flags
-drop 16 end-structure
+	c-uint32:   SDL_MessageBoxButtonData-flags
+	c-int:      SDL_MessageBoxButtonData-buttonid
+	c-char-ptr: SDL_MessageBoxButtonData-text
+end-structure
+
 \ SDL_MessageBoxColor
 begin-structure SDL_MessageBoxColor
-	drop 2 1 +field SDL_MessageBoxColor-b
-	drop 0 1 +field SDL_MessageBoxColor-r
-	drop 1 1 +field SDL_MessageBoxColor-g
-drop 3 end-structure
+	c-uint8:    SDL_MessageBoxColor-r
+	c-uint8:    SDL_MessageBoxColor-g
+	c-uint8:    SDL_MessageBoxColor-b
+end-structure
+
 \ SDL_MessageBoxColorScheme
 begin-structure SDL_MessageBoxColorScheme
-	drop 0 15 +field SDL_MessageBoxColorScheme-colors
-drop 15 end-structure
+	15 bytes: SDL_MessageBoxColorScheme-colors
+end-structure
+
 \ SDL_MessageBoxData
 begin-structure SDL_MessageBoxData
-	drop 32 4 +field SDL_MessageBoxData-numbuttons
-	drop 40 8 +field SDL_MessageBoxData-buttons
+	drop 0 4 +field SDL_MessageBoxData-flags
 	drop 8 8 +field SDL_MessageBoxData-window
-	drop 48 8 +field SDL_MessageBoxData-colorScheme
 	drop 16 8 +field SDL_MessageBoxData-title
 	drop 24 8 +field SDL_MessageBoxData-message
-	drop 0 4 +field SDL_MessageBoxData-flags
-drop 56 end-structure
+	drop 32 4 +field SDL_MessageBoxData-numbuttons
+	drop 40 8 +field SDL_MessageBoxData-buttons
+	drop 48 8 +field SDL_MessageBoxData-colorScheme
+end-structure
 
 \ ------===< functions >===-------
 c-function SDL_ShowMessageBox SDL_ShowMessageBox a a -- n	( messageboxdata buttonid -- )

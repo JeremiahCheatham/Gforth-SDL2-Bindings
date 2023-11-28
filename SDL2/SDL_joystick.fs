@@ -42,25 +42,25 @@ s" SDL2" add-lib
 \ -------===< structs >===--------
 \ struct SDL_VirtualJoystickDesc
 begin-structure SDL_VirtualJoystickDesc
-	drop 4 2 +field SDL_VirtualJoystickDesc-naxes
-	drop 24 8 +field SDL_VirtualJoystickDesc-name
-	drop 56 8 +field SDL_VirtualJoystickDesc-Rumble
-	drop 16 4 +field SDL_VirtualJoystickDesc-button_mask
-	drop 64 8 +field SDL_VirtualJoystickDesc-RumbleTriggers
-	drop 72 8 +field SDL_VirtualJoystickDesc-SetLED
-	drop 8 2 +field SDL_VirtualJoystickDesc-nhats
-	drop 80 8 +field SDL_VirtualJoystickDesc-SendEffect
-	drop 2 2 +field SDL_VirtualJoystickDesc-type
-	drop 0 2 +field SDL_VirtualJoystickDesc-version
-	drop 32 8 +field SDL_VirtualJoystickDesc-userdata
-	drop 12 2 +field SDL_VirtualJoystickDesc-product_id
-	drop 14 2 +field SDL_VirtualJoystickDesc-padding
-	drop 48 8 +field SDL_VirtualJoystickDesc-SetPlayerIndex
-	drop 6 2 +field SDL_VirtualJoystickDesc-nbuttons
-	drop 40 8 +field SDL_VirtualJoystickDesc-Update
-	drop 10 2 +field SDL_VirtualJoystickDesc-vendor_id
-	drop 20 4 +field SDL_VirtualJoystickDesc-axis_mask
-drop 88 end-structure
+	c-uint16:   SDL_VirtualJoystickDesc-version
+	c-uint16:   SDL_VirtualJoystickDesc-type
+	c-uint16:   SDL_VirtualJoystickDesc-naxes
+	c-uint16:   SDL_VirtualJoystickDesc-nbuttons
+	c-uint16:   SDL_VirtualJoystickDesc-nhats
+	c-uint16:   SDL_VirtualJoystickDesc-vendor_id
+	c-uint16:   SDL_VirtualJoystickDesc-product_id
+	c-uint16:   SDL_VirtualJoystickDesc-padding
+	c-uint32:   SDL_VirtualJoystickDesc-button_mask
+	c-uint32:   SDL_VirtualJoystickDesc-axis_mask
+	c-char-ptr: SDL_VirtualJoystickDesc-name
+	c-pointer:  SDL_VirtualJoystickDesc-userdata
+	c-pointer:  SDL_VirtualJoystickDesc-Update
+	c-pointer:  SDL_VirtualJoystickDesc-SetPlayerIndex
+	c-int-ptr:  SDL_VirtualJoystickDesc-Rumble
+	c-int-ptr:  SDL_VirtualJoystickDesc-RumbleTriggers
+	c-int-ptr:  SDL_VirtualJoystickDesc-SetLED
+	c-int-ptr:  SDL_VirtualJoystickDesc-SendEffect
+end-structure
 
 \ --===< function pointers >===---
 \ c-funptr SDL_VirtualJoystickDesc-Update() {((struct SDL_VirtualJoystickDesc*)ptr)->Update} a -- void	( userdata -- )

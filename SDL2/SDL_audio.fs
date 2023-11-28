@@ -8,13 +8,13 @@ s" SDL2" add-lib
 #256	constant SDL_AUDIO_MASK_DATATYPE
 #4096	constant SDL_AUDIO_MASK_ENDIAN
 #32768	constant SDL_AUDIO_MASK_SIGNED
-#8	constant AUDIO_U8
+#8	    constant AUDIO_U8
 #32776	constant AUDIO_S8
-#16	constant AUDIO_U16LSB
+#16	    constant AUDIO_U16LSB
 #32784	constant AUDIO_S16LSB
 #4112	constant AUDIO_U16MSB
 #36880	constant AUDIO_S16MSB
-#16	constant AUDIO_U16
+#16	    constant AUDIO_U16
 #32784	constant AUDIO_S16
 #32800	constant AUDIO_S32LSB
 #36896	constant AUDIO_S32MSB
@@ -22,50 +22,52 @@ s" SDL2" add-lib
 #33056	constant AUDIO_F32LSB
 #37152	constant AUDIO_F32MSB
 #33056	constant AUDIO_F32
-#16	constant AUDIO_U16SYS
+#16	    constant AUDIO_U16SYS
 #32784	constant AUDIO_S16SYS
 #32800	constant AUDIO_S32SYS
 #33056	constant AUDIO_F32SYS
-#1	constant SDL_AUDIO_ALLOW_FREQUENCY_CHANGE
-#2	constant SDL_AUDIO_ALLOW_FORMAT_CHANGE
-#4	constant SDL_AUDIO_ALLOW_CHANNELS_CHANGE
-#8	constant SDL_AUDIO_ALLOW_SAMPLES_CHANGE
-#15	constant SDL_AUDIO_ALLOW_ANY_CHANGE
-#9	constant SDL_AUDIOCVT_MAX_FILTERS
+#1	    constant SDL_AUDIO_ALLOW_FREQUENCY_CHANGE
+#2	    constant SDL_AUDIO_ALLOW_FORMAT_CHANGE
+#4	    constant SDL_AUDIO_ALLOW_CHANNELS_CHANGE
+#8	    constant SDL_AUDIO_ALLOW_SAMPLES_CHANGE
+#15	    constant SDL_AUDIO_ALLOW_ANY_CHANGE
+#9	    constant SDL_AUDIOCVT_MAX_FILTERS
 #128	constant SDL_MIX_MAXVOLUME
 
 \ --------===< enums >===---------
-#0	constant SDL_AUDIO_STOPPED
-#1	constant SDL_AUDIO_PLAYING
-#2	constant SDL_AUDIO_PAUSED
+#0	    constant SDL_AUDIO_STOPPED
+#1	    constant SDL_AUDIO_PLAYING
+#2	    constant SDL_AUDIO_PAUSED
 
 \ -------===< structs >===--------
+
 \ struct SDL_AudioSpec
 begin-structure SDL_AudioSpec
-	drop 0 4 +field SDL_AudioSpec-freq
-	drop 6 1 +field SDL_AudioSpec-channels
-	drop 7 1 +field SDL_AudioSpec-silence
-	drop 10 2 +field SDL_AudioSpec-padding
-	drop 8 2 +field SDL_AudioSpec-samples
-	drop 12 4 +field SDL_AudioSpec-size
-	drop 4 2 +field SDL_AudioSpec-format
-	drop 16 8 +field SDL_AudioSpec-callback
-	drop 24 8 +field SDL_AudioSpec-userdata
-drop 32 end-structure
+	c-int:      SDL_AudioSpec-freq
+	c-uint16:   SDL_AudioSpec-format
+	c-uint8:    SDL_AudioSpec-channels
+	c-uint8:    SDL_AudioSpec-silence
+	c-uint16:   SDL_AudioSpec-samples
+	c-uint16:   SDL_AudioSpec-padding
+	c-uint32:   SDL_AudioSpec-size
+	c-pointer:  SDL_AudioSpec-callback
+	c-pointer:  SDL_AudioSpec-userdata
+end-structure
+
 \ struct SDL_AudioCVT
 begin-structure SDL_AudioCVT
-	drop 124 4 +field SDL_AudioCVT-filter_index
-	drop 8 8 +field SDL_AudioCVT-rate_incr
-	drop 24 4 +field SDL_AudioCVT-len
-	drop 28 4 +field SDL_AudioCVT-len_cvt
-	drop 16 8 +field SDL_AudioCVT-buf
-	drop 44 80 +field SDL_AudioCVT-filters
-	drop 4 2 +field SDL_AudioCVT-src_format
-	drop 6 2 +field SDL_AudioCVT-dst_format
-	drop 32 4 +field SDL_AudioCVT-len_mult
-	drop 0 4 +field SDL_AudioCVT-needed
-	drop 36 8 +field SDL_AudioCVT-len_ratio
-drop 128 end-structure
+	c-int:          SDL_AudioCVT-needed
+    c-uint16:       SDL_AudioCVT-src_format
+	c-uint16:       SDL_AudioCVT-dst_format
+	c-double:       SDL_AudioCVT-rate_incr
+	c-uint8-ptr:    SDL_AudioCVT-buf
+	c-int:          SDL_AudioCVT-len
+	c-int:          SDL_AudioCVT-len_cvt
+	c-int:          SDL_AudioCVT-len_mult
+	c-double:       SDL_AudioCVT-len_ratio
+	80 bytes:       SDL_AudioCVT-filters
+	c-int:          SDL_AudioCVT-filter_index
+end-structure
 
 \ ------===< functions >===-------
 c-function SDL_GetNumAudioDrivers SDL_GetNumAudioDrivers  -- n	( -- )

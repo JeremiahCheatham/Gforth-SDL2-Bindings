@@ -5,34 +5,34 @@ s" SDL2_ttf" add-lib
 
 
 \ ----===< int constants >===-----
-#2	constant SDL_TTF_MAJOR_VERSION
-#20	constant SDL_TTF_MINOR_VERSION
-#2	constant SDL_TTF_PATCHLEVEL
-#2	constant TTF_MAJOR_VERSION
-#20	constant TTF_MINOR_VERSION
-#2	constant TTF_PATCHLEVEL
-#65279	constant UNICODE_BOM_NATIVE
+#2      constant SDL_TTF_MAJOR_VERSION
+#20     constant SDL_TTF_MINOR_VERSION
+#2      constant SDL_TTF_PATCHLEVEL
+#2      constant TTF_MAJOR_VERSION
+#20     constant TTF_MINOR_VERSION
+#2      constant TTF_PATCHLEVEL
+#65279  constant UNICODE_BOM_NATIVE
 #65534	constant UNICODE_BOM_SWAPPED
-#0	constant TTF_STYLE_NORMAL
-#1	constant TTF_STYLE_BOLD
-#2	constant TTF_STYLE_ITALIC
-#4	constant TTF_STYLE_UNDERLINE
-#8	constant TTF_STYLE_STRIKETHROUGH
-#0	constant TTF_HINTING_NORMAL
-#1	constant TTF_HINTING_LIGHT
-#2	constant TTF_HINTING_MONO
-#3	constant TTF_HINTING_NONE
-#4	constant TTF_HINTING_LIGHT_SUBPIXEL
-#0	constant TTF_WRAPPED_ALIGN_LEFT
-#1	constant TTF_WRAPPED_ALIGN_CENTER
-#2	constant TTF_WRAPPED_ALIGN_RIGHT
+#0	    constant TTF_STYLE_NORMAL
+#1	    constant TTF_STYLE_BOLD
+#2	    constant TTF_STYLE_ITALIC
+#4	    constant TTF_STYLE_UNDERLINE
+#8	    constant TTF_STYLE_STRIKETHROUGH
+#0	    constant TTF_HINTING_NORMAL
+#1	    constant TTF_HINTING_LIGHT
+#2	    constant TTF_HINTING_MONO
+#3	    constant TTF_HINTING_NONE
+#4	    constant TTF_HINTING_LIGHT_SUBPIXEL
+#0	    constant TTF_WRAPPED_ALIGN_LEFT
+#1	    constant TTF_WRAPPED_ALIGN_CENTER
+#2	    constant TTF_WRAPPED_ALIGN_RIGHT
 
 
 \ --------===< enums >===---------
-#0	constant TTF_DIRECTION_LTR
-#1	constant TTF_DIRECTION_RTL
-#2	constant TTF_DIRECTION_TTB
-#3	constant TTF_DIRECTION_BTT
+#0	    constant TTF_DIRECTION_LTR
+#1	    constant TTF_DIRECTION_RTL
+#2	    constant TTF_DIRECTION_TTB
+#3	    constant TTF_DIRECTION_BTT
 
 
 \c SDL_Surface * GF_TTF_RenderText_Solid(TTF_Font *font, const char *text, SDL_Color *fg) {

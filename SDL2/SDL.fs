@@ -1,5 +1,5 @@
 \ table >order definitions
-
+require c-helper.fs
 require SDL_platform.fs
 require SDL_config.fs
 require SDL_stdinc.fs

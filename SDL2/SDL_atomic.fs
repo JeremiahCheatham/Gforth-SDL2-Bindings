@@ -6,8 +6,8 @@ s" SDL2" add-lib
 \ -------===< structs >===--------
 \ SDL_atomic_t
 begin-structure SDL_atomic_t
-	drop 0 4 +field SDL_atomic_t-value
-drop 4 end-structure
+	c-int: SDL_atomic_t-value
+end-structure
 
 \ ------===< functions >===-------
 c-function SDL_AtomicTryLock SDL_AtomicTryLock a -- n	( lock -- )

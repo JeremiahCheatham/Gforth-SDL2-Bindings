@@ -19,12 +19,12 @@ s" SDL2_image" add-lib
 \ -------===< structs >===--------
 \ IMG_Animation
 begin-structure IMG_Animation
-	drop 0 4 +field IMG_Animation-w
-	drop 16 8 +field IMG_Animation-frames
-	drop 8 4 +field IMG_Animation-count
-	drop 24 8 +field IMG_Animation-delays
-	drop 4 4 +field IMG_Animation-h
-drop 32 end-structure
+	c-int:          IMG_Animation-w
+	c-int:          IMG_Animation-h
+	c-int:          IMG_Animation-count
+	c-struct-ptr:   IMG_Animation-frames
+	c-int-ptr:      IMG_Animation-delays
+end-structure
 
 \ ------===< functions >===-------
 c-function IMG_GetError SDL_GetError -- a ( -- string )

@@ -6,21 +6,21 @@ s" SDL2" add-lib
 \ -------===< structs >===--------
 \ struct SDL_hid_device_info
 begin-structure SDL_hid_device_info
-	drop 64 4 +field SDL_hid_device_info-interface_protocol
-	drop 56 4 +field SDL_hid_device_info-interface_class
-	drop 52 4 +field SDL_hid_device_info-interface_number
-	drop 24 2 +field SDL_hid_device_info-release_number
-	drop 16 8 +field SDL_hid_device_info-serial_number
-	drop 0 8 +field SDL_hid_device_info-path
-	drop 40 8 +field SDL_hid_device_info-product_string
-	drop 32 8 +field SDL_hid_device_info-manufacturer_string
-	drop 60 4 +field SDL_hid_device_info-interface_subclass
-	drop 50 2 +field SDL_hid_device_info-usage
-	drop 72 8 +field SDL_hid_device_info-next
-	drop 10 2 +field SDL_hid_device_info-product_id
-	drop 48 2 +field SDL_hid_device_info-usage_page
-	drop 8 2 +field SDL_hid_device_info-vendor_id
-drop 80 end-structure
+	c-char-ptr:     SDL_hid_device_info-path
+	c-ushort:       SDL_hid_device_info-vendor_id
+	c-ushort:       SDL_hid_device_info-product_id
+    c-pointer:      SDL_hid_device_info-serial_number
+	c-ushort:       SDL_hid_device_info-release_number
+    c-pointer:      SDL_hid_device_info-manufacturer_string
+	c-pointer:      SDL_hid_device_info-product_string
+	c-ushort:       SDL_hid_device_info-usage_page
+	c-ushort:       SDL_hid_device_info-usage
+	c-int:          SDL_hid_device_info-interface_number
+	c-int:          SDL_hid_device_info-interface_class
+	c-int:          SDL_hid_device_info-interface_subclass
+	c-int:          SDL_hid_device_info-interface_protocol
+    c-struct-ptr:   SDL_hid_device_info-next
+end-structure
 
 \ ------===< functions >===-------
 c-function SDL_hid_init SDL_hid_init  -- n	( -- )

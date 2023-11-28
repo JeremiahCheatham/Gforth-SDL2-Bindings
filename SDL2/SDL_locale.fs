@@ -6,9 +6,9 @@ s" SDL2" add-lib
 \ -------===< structs >===--------
 \ struct SDL_Locale
 begin-structure SDL_Locale
-	drop 8 8 +field SDL_Locale-country
-	drop 0 8 +field SDL_Locale-language
-drop 16 end-structure
+	c-char-ptr: SDL_Locale-country
+	c-char-ptr: SDL_Locale-language
+end-structure
 
 \ ------===< functions >===-------
 c-function SDL_GetPreferredLocales SDL_GetPreferredLocales  -- a	( -- )

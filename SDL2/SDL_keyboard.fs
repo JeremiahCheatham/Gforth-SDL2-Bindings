@@ -6,11 +6,11 @@ s" SDL2" add-lib
 \ -------===< structs >===--------
 \ struct SDL_Keysym
 begin-structure SDL_Keysym
-	drop 0 4 +field SDL_Keysym-scancode
-	drop 4 4 +field SDL_Keysym-sym
-	drop 12 4 +field SDL_Keysym-unused
-	drop 8 2 +field SDL_Keysym-mod
-drop 16 end-structure
+	c-sint32:   SDL_Keysym-scancode
+	c-sint32:   SDL_Keysym-sym
+	c-uint16:   SDL_Keysym-mod
+	c-uint32:   SDL_Keysym-unused
+end-structure
 
 \ ------===< functions >===-------
 c-function SDL_GetKeyboardFocus SDL_GetKeyboardFocus  -- a	( -- )
