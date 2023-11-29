@@ -15,16 +15,18 @@ s" SDL2" add-lib
 #3	constant ShapeModeColorKey
 
 \ -------===< structs >===--------
+
 \ SDL_WindowShapeParams
 begin-structure SDL_WindowShapeParams
 	drop 0 4 +field SDL_WindowShapeParams-colorKey
 	drop 0 1 +field SDL_WindowShapeParams-binarizationCutoff
 drop 4 end-structure
+
 \ struct SDL_WindowShapeMode
 begin-structure SDL_WindowShapeMode
-	drop 4 4 +field SDL_WindowShapeMode-parameters
-	drop 0 4 +field SDL_WindowShapeMode-mode
-drop 8 end-structure
+	c-int:        SDL_WindowShapeMode-mode
+	4 bytes:    SDL_WindowShapeMode-parameters
+end-structure
 
 \ ------===< functions >===-------
 c-function SDL_CreateShapedWindow SDL_CreateShapedWindow a n n n n n -- a	( title x y w h flags -- )

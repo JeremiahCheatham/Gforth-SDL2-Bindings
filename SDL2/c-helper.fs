@@ -47,6 +47,7 @@ sizeof_pointer  VALUE c-struct-ptr
 : c-uint8:      c-uint8         +field ;
 : c-uint16:     c-uint16        +field ;
 : c-uint32:     c-uint32        +field ;
+: c-uint32s:    c-uint32 *      +field ;
 : c-uint64:     c-uint64        +field ;
 : c-sint16:     c-sint16        +field ;
 : c-sint32:     c-sint32        +field ;

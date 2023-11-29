@@ -17,20 +17,21 @@ s" SDL2" add-lib
 #3	constant SDL_YUV_CONVERSION_AUTOMATIC
 
 \ -------===< structs >===--------
+
 \ struct SDL_Surface
 begin-structure SDL_Surface
-	drop 16 4 +field SDL_Surface-w
-	drop 88 4 +field SDL_Surface-refcount
-	drop 64 16 +field SDL_Surface-clip_rect
-	drop 24 4 +field SDL_Surface-pitch
-	drop 80 8 +field SDL_Surface-map
 	drop 0 4 +field SDL_Surface-flags
 	drop 8 8 +field SDL_Surface-format
+	drop 16 4 +field SDL_Surface-w
+	drop 20 4 +field SDL_Surface-h
+	drop 24 4 +field SDL_Surface-pitch
+	drop 32 8 +field SDL_Surface-pixels
 	drop 40 8 +field SDL_Surface-userdata
 	drop 48 4 +field SDL_Surface-locked
 	drop 56 8 +field SDL_Surface-list_blitmap
-	drop 20 4 +field SDL_Surface-h
-	drop 32 8 +field SDL_Surface-pixels
+	drop 64 16 +field SDL_Surface-clip_rect
+	drop 80 8 +field SDL_Surface-map
+	drop 88 4 +field SDL_Surface-refcount
 drop 96 end-structure
 
 \ ------===< functions >===-------

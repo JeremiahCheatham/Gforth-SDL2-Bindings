@@ -10,12 +10,13 @@ s" SDL2" add-lib
 #4800	constant SDL_COMPILEDVERSION
 
 \ -------===< structs >===--------
+
 \ struct SDL_version
 begin-structure SDL_version
-	drop 0 1 +field SDL_version-major
-	drop 1 1 +field SDL_version-minor
-	drop 2 1 +field SDL_version-patch
-drop 3 end-structure
+	c-uint8:    SDL_version-major
+	c-uint8:    SDL_version-minor
+	c-uint8:    SDL_version-patch
+end-structure
 
 \ ------===< functions >===-------
 c-function SDL_GetVersion SDL_GetVersion a -- void	( ver -- )

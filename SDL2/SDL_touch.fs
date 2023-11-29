@@ -10,13 +10,14 @@ s" SDL2" add-lib
 #2	constant SDL_TOUCH_DEVICE_INDIRECT_RELATIVE
 
 \ -------===< structs >===--------
+
 \ struct SDL_Finger
 begin-structure SDL_Finger
-	drop 8 4 +field SDL_Finger-x
-	drop 0 8 +field SDL_Finger-id
-	drop 12 4 +field SDL_Finger-y
-	drop 16 4 +field SDL_Finger-pressure
-drop 24 end-structure
+	c-sint64:   SDL_Finger-id
+	c-float:    SDL_Finger-x
+	c-float:    SDL_Finger-y
+	c-float:    SDL_Finger-pressure
+end-structure
 
 \ ------===< functions >===-------
 c-function SDL_GetNumTouchDevices SDL_GetNumTouchDevices  -- n	( -- )

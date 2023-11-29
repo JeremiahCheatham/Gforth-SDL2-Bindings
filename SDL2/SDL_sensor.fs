@@ -3,8 +3,6 @@ c-library sdl_sensor
 s" SDL2" add-lib
 \c #include <SDL2/SDL_sensor.h>
 
-\ ----===< int constants >===-----
-
 \ ---===< float constants >===----
 9.806650e0	fconstant SDL_STANDARD_GRAVITY
 

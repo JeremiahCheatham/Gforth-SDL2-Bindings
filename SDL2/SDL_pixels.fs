@@ -4,51 +4,51 @@ s" SDL2" add-lib
 \c #include <SDL2/SDL_pixels.h>
 
 \ ----===< int constants >===-----
-#255	constant SDL_ALPHA_OPAQUE
-#0	constant SDL_ALPHA_TRANSPARENT
+#255    constant SDL_ALPHA_OPAQUE
+#0      constant SDL_ALPHA_TRANSPARENT
 
 \ --------===< enums >===---------
-#0	constant SDL_PIXELTYPE_UNKNOWN
-#1	constant SDL_PIXELTYPE_INDEX1
-#2	constant SDL_PIXELTYPE_INDEX4
-#3	constant SDL_PIXELTYPE_INDEX8
-#4	constant SDL_PIXELTYPE_PACKED8
-#5	constant SDL_PIXELTYPE_PACKED16
-#6	constant SDL_PIXELTYPE_PACKED32
-#7	constant SDL_PIXELTYPE_ARRAYU8
-#8	constant SDL_PIXELTYPE_ARRAYU16
-#9	constant SDL_PIXELTYPE_ARRAYU32
-#10	constant SDL_PIXELTYPE_ARRAYF16
-#11	constant SDL_PIXELTYPE_ARRAYF32
-#0	constant SDL_BITMAPORDER_NONE
-#1	constant SDL_BITMAPORDER_4321
-#2	constant SDL_BITMAPORDER_1234
-#0	constant SDL_PACKEDORDER_NONE
-#1	constant SDL_PACKEDORDER_XRGB
-#2	constant SDL_PACKEDORDER_RGBX
-#3	constant SDL_PACKEDORDER_ARGB
-#4	constant SDL_PACKEDORDER_RGBA
-#5	constant SDL_PACKEDORDER_XBGR
-#6	constant SDL_PACKEDORDER_BGRX
-#7	constant SDL_PACKEDORDER_ABGR
-#8	constant SDL_PACKEDORDER_BGRA
-#0	constant SDL_ARRAYORDER_NONE
-#1	constant SDL_ARRAYORDER_RGB
-#2	constant SDL_ARRAYORDER_RGBA
-#3	constant SDL_ARRAYORDER_ARGB
-#4	constant SDL_ARRAYORDER_BGR
-#5	constant SDL_ARRAYORDER_BGRA
-#6	constant SDL_ARRAYORDER_ABGR
-#0	constant SDL_PACKEDLAYOUT_NONE
-#1	constant SDL_PACKEDLAYOUT_332
-#2	constant SDL_PACKEDLAYOUT_4444
-#3	constant SDL_PACKEDLAYOUT_1555
-#4	constant SDL_PACKEDLAYOUT_5551
-#5	constant SDL_PACKEDLAYOUT_565
-#6	constant SDL_PACKEDLAYOUT_8888
-#7	constant SDL_PACKEDLAYOUT_2101010
-#8	constant SDL_PACKEDLAYOUT_1010102
-#0	constant SDL_PIXELFORMAT_UNKNOWN
+#0          constant SDL_PIXELTYPE_UNKNOWN
+#1          constant SDL_PIXELTYPE_INDEX1
+#2          constant SDL_PIXELTYPE_INDEX4
+#3          constant SDL_PIXELTYPE_INDEX8
+#4          constant SDL_PIXELTYPE_PACKED8
+#5          constant SDL_PIXELTYPE_PACKED16
+#6          constant SDL_PIXELTYPE_PACKED32
+#7          constant SDL_PIXELTYPE_ARRAYU8
+#8          constant SDL_PIXELTYPE_ARRAYU16
+#9          constant SDL_PIXELTYPE_ARRAYU32
+#10         constant SDL_PIXELTYPE_ARRAYF16
+#11         constant SDL_PIXELTYPE_ARRAYF32
+#0          constant SDL_BITMAPORDER_NONE
+#1          constant SDL_BITMAPORDER_4321
+#2          constant SDL_BITMAPORDER_1234
+#0          constant SDL_PACKEDORDER_NONE
+#1          constant SDL_PACKEDORDER_XRGB
+#2          constant SDL_PACKEDORDER_RGBX
+#3          constant SDL_PACKEDORDER_ARGB
+#4          constant SDL_PACKEDORDER_RGBA
+#5          constant SDL_PACKEDORDER_XBGR
+#6          constant SDL_PACKEDORDER_BGRX
+#7          constant SDL_PACKEDORDER_ABGR
+#8          constant SDL_PACKEDORDER_BGRA
+#0          constant SDL_ARRAYORDER_NONE
+#1          constant SDL_ARRAYORDER_RGB
+#2          constant SDL_ARRAYORDER_RGBA
+#3          constant SDL_ARRAYORDER_ARGB
+#4          constant SDL_ARRAYORDER_BGR
+#5          constant SDL_ARRAYORDER_BGRA
+#6          constant SDL_ARRAYORDER_ABGR
+#0          constant SDL_PACKEDLAYOUT_NONE
+#1          constant SDL_PACKEDLAYOUT_332
+#2          constant SDL_PACKEDLAYOUT_4444
+#3          constant SDL_PACKEDLAYOUT_1555
+#4          constant SDL_PACKEDLAYOUT_5551
+#5          constant SDL_PACKEDLAYOUT_565
+#6          constant SDL_PACKEDLAYOUT_8888
+#7          constant SDL_PACKEDLAYOUT_2101010
+#8          constant SDL_PACKEDLAYOUT_1010102
+#0          constant SDL_PIXELFORMAT_UNKNOWN
 #286261504	constant SDL_PIXELFORMAT_INDEX1LSB
 #287310080	constant SDL_PIXELFORMAT_INDEX1MSB
 #303039488	constant SDL_PIXELFORMAT_INDEX4LSB
@@ -100,41 +100,44 @@ s" SDL2" add-lib
 #542328143	constant SDL_PIXELFORMAT_EXTERNAL_OES
 
 \ -------===< structs >===--------
+
 \ struct SDL_Color
 begin-structure SDL_Color
-	drop 2 1 +field SDL_Color-b
 	drop 0 1 +field SDL_Color-r
 	drop 1 1 +field SDL_Color-g
+	drop 2 1 +field SDL_Color-b
 	drop 3 1 +field SDL_Color-a
 drop 4 end-structure
+
 \ struct SDL_Palette
 begin-structure SDL_Palette
-	drop 20 4 +field SDL_Palette-refcount
 	drop 0 4 +field SDL_Palette-ncolors
 	drop 8 8 +field SDL_Palette-colors
 	drop 16 4 +field SDL_Palette-version
+	drop 20 4 +field SDL_Palette-refcount
 drop 24 end-structure
+
 \ struct SDL_PixelFormat
 begin-structure SDL_PixelFormat
-	drop 42 1 +field SDL_PixelFormat-Bshift
-	drop 44 4 +field SDL_PixelFormat-refcount
-	drop 24 4 +field SDL_PixelFormat-Gmask
-	drop 37 1 +field SDL_PixelFormat-Gloss
 	drop 0 4 +field SDL_PixelFormat-format
+	drop 8 8 +field SDL_PixelFormat-palette
+	drop 16 1 +field SDL_PixelFormat-BitsPerPixel
+	drop 17 1 +field SDL_PixelFormat-BytesPerPixel
+	drop 18 2 +field SDL_PixelFormat-padding
+	drop 20 4 +field SDL_PixelFormat-Rmask
+	drop 24 4 +field SDL_PixelFormat-Gmask
 	drop 28 4 +field SDL_PixelFormat-Bmask
 	drop 32 4 +field SDL_PixelFormat-Amask
-	drop 20 4 +field SDL_PixelFormat-Rmask
-	drop 8 8 +field SDL_PixelFormat-palette
-	drop 38 1 +field SDL_PixelFormat-Bloss
-	drop 41 1 +field SDL_PixelFormat-Gshift
-	drop 39 1 +field SDL_PixelFormat-Aloss
-	drop 17 1 +field SDL_PixelFormat-BytesPerPixel
-	drop 16 1 +field SDL_PixelFormat-BitsPerPixel
 	drop 36 1 +field SDL_PixelFormat-Rloss
-	drop 48 8 +field SDL_PixelFormat-next
-	drop 18 2 +field SDL_PixelFormat-padding
+	drop 37 1 +field SDL_PixelFormat-Gloss
+	drop 38 1 +field SDL_PixelFormat-Bloss
+	drop 39 1 +field SDL_PixelFormat-Aloss
 	drop 40 1 +field SDL_PixelFormat-Rshift
+	drop 41 1 +field SDL_PixelFormat-Gshift
+	drop 42 1 +field SDL_PixelFormat-Bshift
 	drop 43 1 +field SDL_PixelFormat-Ashift
+	drop 44 4 +field SDL_PixelFormat-refcount
+	drop 48 8 +field SDL_PixelFormat-next
 drop 56 end-structure
 
 \ ------===< functions >===-------

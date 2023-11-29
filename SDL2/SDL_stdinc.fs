@@ -3,8 +3,6 @@ c-library sdl_stdinc
 s" SDL2" add-lib
 \c #include <SDL2/SDL_stdinc.h>
 
-\ ----===< int constants >===-----
-
 \ ---===< float constants >===----
 0.000000e0	fconstant SDL_FLT_EPSILON
 3.141593e0	fconstant M_PI

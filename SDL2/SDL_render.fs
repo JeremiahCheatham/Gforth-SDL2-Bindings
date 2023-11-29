@@ -22,21 +22,23 @@ s" SDL2" add-lib
 #2	constant SDL_FLIP_VERTICAL
 
 \ -------===< structs >===--------
+
 \ struct SDL_RendererInfo
 begin-structure SDL_RendererInfo
-	drop 0 8 +field SDL_RendererInfo-name
-	drop 80 4 +field SDL_RendererInfo-max_texture_width
-	drop 84 4 +field SDL_RendererInfo-max_texture_height
-	drop 12 4 +field SDL_RendererInfo-num_texture_formats
-	drop 16 64 +field SDL_RendererInfo-texture_formats
-	drop 8 4 +field SDL_RendererInfo-flags
-drop 88 end-structure
+	c-char-ptr:     SDL_RendererInfo-name
+	c-uint32:       SDL_RendererInfo-flags
+	c-uint32:       SDL_RendererInfo-num_texture_formats
+	16 c-uint32s:   SDL_RendererInfo-texture_formats
+	c-int:          SDL_RendererInfo-max_texture_width
+	c-int:          SDL_RendererInfo-max_texture_height
+end-structure
+
 \ struct SDL_Vertex
 begin-structure SDL_Vertex
-	drop 8 4 +field SDL_Vertex-color
-	drop 0 8 +field SDL_Vertex-position
-	drop 12 8 +field SDL_Vertex-tex_coord
-drop 20 end-structure
+	SDL_FPoint  +field SDL_Vertex-position
+	SDL_Color   +field SDL_Vertex-color
+	SDL_FPoint  +field SDL_Vertex-tex_coord
+end-structure
 
 \ ------===< functions >===-------
 c-function SDL_GetNumRenderDrivers SDL_GetNumRenderDrivers  -- n	( -- )

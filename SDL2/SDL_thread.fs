@@ -8,8 +8,6 @@ c-library sdl_thread
 s" SDL2" add-lib
 \c #include <SDL2/SDL_thread.h>
 
-\ ----===< int constants >===-----
-
 \ --------===< enums >===---------
 #0	constant SDL_THREAD_PRIORITY_LOW
 #1	constant SDL_THREAD_PRIORITY_NORMAL
