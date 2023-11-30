@@ -65,7 +65,7 @@ begin-structure SDL_AudioCVT
 	c-int:          SDL_AudioCVT-len_cvt
 	c-int:          SDL_AudioCVT-len_mult
 	c-double:       SDL_AudioCVT-len_ratio
-	80 bytes:       SDL_AudioCVT-filters
+	10 c-func-ptrs: SDL_AudioCVT-filters
 	c-int:          SDL_AudioCVT-filter_index
 end-structure
 

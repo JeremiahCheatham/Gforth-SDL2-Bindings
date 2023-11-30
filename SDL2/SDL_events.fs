@@ -14,7 +14,7 @@ s" SDL2" add-lib
 #1	constant SDL_ENABLE
 
 \ --------===< enums >===---------
-#0	constant SDL_FIRSTEVENT
+#0	    constant SDL_FIRSTEVENT
 #256	constant SDL_QUIT_ENUM
 #257	constant SDL_APP_TERMINATING
 #258	constant SDL_APP_LOWMEMORY
@@ -252,7 +252,7 @@ begin-structure SDL_JoyBatteryEvent
 	c-uint32:   SDL_JoyBatteryEvent-type
 	c-uint32:   SDL_JoyBatteryEvent-timestamp
 	c-sint32:   SDL_JoyBatteryEvent-which
-	4 bytes:    SDL_JoyBatteryEvent-level
+	c-enum:     SDL_JoyBatteryEvent-level
 end-structure
 
 \ struct SDL_ControllerAxisEvent
@@ -401,7 +401,7 @@ end-structure
 begin-structure SDL_SysWMEvent
 	c-uint32:   SDL_SysWMEvent-type
 	c-uint32:   SDL_SysWMEvent-timestamp
-	c-pointer:  SDL_SysWMEvent-msg
+	c-struct-ptr:  SDL_SysWMEvent-msg
 end-structure
 
 \ union SDL_Event

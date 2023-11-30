@@ -56,16 +56,16 @@ s" SDL2" add-lib
 \c #include <SDL2/SDL.h>
 
 \ ----===< int constants >===-----
-#1	constant SDL_INIT_TIMER
-#16	constant SDL_INIT_AUDIO
-#32	constant SDL_INIT_VIDEO
-#512	constant SDL_INIT_JOYSTICK
-#4096	constant SDL_INIT_HAPTIC
-#8192	constant SDL_INIT_GAMECONTROLLER
-#16384	constant SDL_INIT_EVENTS
-#32768	constant SDL_INIT_SENSOR
+#1	        constant SDL_INIT_TIMER
+#16	        constant SDL_INIT_AUDIO
+#32	        constant SDL_INIT_VIDEO
+#512	    constant SDL_INIT_JOYSTICK
+#4096	    constant SDL_INIT_HAPTIC
+#8192	    constant SDL_INIT_GAMECONTROLLER
+#16384	    constant SDL_INIT_EVENTS
+#32768	    constant SDL_INIT_SENSOR
 #1048576	constant SDL_INIT_NOPARACHUTE
-#62001	constant SDL_INIT_EVERYTHING
+#62001	    constant SDL_INIT_EVERYTHING
 
 \ ------===< functions >===-------
 c-function SDL_Init SDL_Init n -- n	( flags -- )

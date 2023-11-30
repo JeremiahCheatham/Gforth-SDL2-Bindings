@@ -19,6 +19,7 @@ c-function sizeof_pointer   sizeof_pointer  -- n ( -- size )
 end-c-library
 
 sizeof_char     VALUE c-char
+sizeof_int      VALUE c-enum
 sizeof_int      VALUE c-int
 sizeof_int      VALUE c-uint
 sizeof_short    VALUE c-short
@@ -37,11 +38,13 @@ sizeof_pointer  VALUE c-char-ptr
 sizeof_pointer  VALUE c-int-ptr
 sizeof_pointer  VALUE c-uint8-ptr
 sizeof_pointer  VALUE c-struct-ptr
+sizeof_pointer  VALUE c-func-ptr
 
 : bytes:                        +field ;
 : c-chars:      c-char *        +field ;
 : c-short:      c-short         +field ;
 : c-ushort:     c-ushort        +field ;
+: c-enum:       c-enum          +field ;
 : c-int:        c-int           +field ;
 : c-uint:       c-uint          +field ;
 : c-uint8:      c-uint8         +field ;
@@ -60,3 +63,6 @@ sizeof_pointer  VALUE c-struct-ptr
 : c-int-ptr:    c-int-ptr       +field ;
 : c-uint8-ptr:  c-uint8-ptr     +field ;
 : c-struct-ptr: c-struct-ptr    +field ;
+: c-func-ptr:   c-func-ptr      +field ;
+: c-func-ptrs:  c-func-ptr *    +field ;
+
