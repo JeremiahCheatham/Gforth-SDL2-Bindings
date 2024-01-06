@@ -132,13 +132,13 @@ utime DROP seed ! rnd DROP
         game-cleanup
     THEN
 
-    S" sounds/sdl1.ogg" >c-str Mix_LoadWAV TO sdl-sound
+    S" sounds/sdl.ogg" >c-str Mix_LoadWAV TO sdl-sound
     sdl-sound 0= IF
         ." Error loading sound effect: " Mix_GetError c-str> TYPE CR
         game-cleanup
     THEN
 
-    S" sounds/forth2.ogg" >c-str Mix_LoadWAV TO forth-sound
+    S" sounds/forth.ogg" >c-str Mix_LoadWAV TO forth-sound
     forth-sound 0= IF
         ." Error loading sound effect: " Mix_GetError c-str> TYPE CR
         game-cleanup
