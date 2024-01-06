@@ -14,18 +14,20 @@ s" SDL2" add-lib
 #2	constant ShapeModeReverseBinarizeAlpha
 #3	constant ShapeModeColorKey
 
-\ -------===< structs >===--------
+\ -------===< unions >===--------
 
 \ SDL_WindowShapeParams
 begin-structure SDL_WindowShapeParams
-	drop 0 4 +field SDL_WindowShapeParams-colorKey
-	drop 0 1 +field SDL_WindowShapeParams-binarizationCutoff
-drop 4 end-structure
+	drop 0 SDL_Color bytes:	SDL_WindowShapeParams-colorKey
+	drop 0 c-uint8:			SDL_WindowShapeParams-binarizationCutoff
+end-structure
+
+\ -------===< structs >===--------
 
 \ struct SDL_WindowShapeMode
 begin-structure SDL_WindowShapeMode
-	c-int:        SDL_WindowShapeMode-mode
-	4 bytes:    SDL_WindowShapeMode-parameters
+	c-enum:				SDL_WindowShapeMode-mode
+	SDL_Color bytes:	SDL_WindowShapeMode-parameters
 end-structure
 
 \ ------===< functions >===-------

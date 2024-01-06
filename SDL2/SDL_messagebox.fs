@@ -41,13 +41,15 @@ end-structure
 
 \ SDL_MessageBoxData
 begin-structure SDL_MessageBoxData
-	c-uint32:   SDL_MessageBoxData-flags
-	c-pointer:  SDL_MessageBoxData-window
-	c-char-ptr: SDL_MessageBoxData-title
-	c-char-ptr: SDL_MessageBoxData-message
-	c-int:      SDL_MessageBoxData-numbuttons
-	c-pointer:  SDL_MessageBoxData-buttons
-	c-pointer:  SDL_MessageBoxData-colorScheme
+	c-uint32:       SDL_MessageBoxData-flags
+	c-uint32:       SDL_MessageBoxData-padding
+	c-struct-ptr:   SDL_MessageBoxData-window
+	c-char-ptr:     SDL_MessageBoxData-title
+	c-char-ptr:     SDL_MessageBoxData-message
+	c-int:          SDL_MessageBoxData-numbuttons
+	c-uint32:       SDL_MessageBoxData-padding2
+	c-struct-ptr:   SDL_MessageBoxData-buttons
+	c-struct-ptr:   SDL_MessageBoxData-colorScheme
 end-structure
 
 \ ------===< functions >===-------

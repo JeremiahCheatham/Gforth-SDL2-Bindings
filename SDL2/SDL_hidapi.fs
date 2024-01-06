@@ -9,16 +9,19 @@ begin-structure SDL_hid_device_info
 	c-char-ptr:     SDL_hid_device_info-path
 	c-ushort:       SDL_hid_device_info-vendor_id
 	c-ushort:       SDL_hid_device_info-product_id
-    c-pointer:      SDL_hid_device_info-serial_number
+	c-uint32:       SDL_hid_device_info-padding
+    c-char-ptr:     SDL_hid_device_info-serial_number
 	c-ushort:       SDL_hid_device_info-release_number
-    c-pointer:      SDL_hid_device_info-manufacturer_string
-	c-pointer:      SDL_hid_device_info-product_string
+	6 bytes:		SDL_hid_device_info-padding2
+    c-char-ptr:     SDL_hid_device_info-manufacturer_string
+	c-char-ptr:     SDL_hid_device_info-product_string
 	c-ushort:       SDL_hid_device_info-usage_page
 	c-ushort:       SDL_hid_device_info-usage
 	c-int:          SDL_hid_device_info-interface_number
 	c-int:          SDL_hid_device_info-interface_class
 	c-int:          SDL_hid_device_info-interface_subclass
 	c-int:          SDL_hid_device_info-interface_protocol
+	c-uint32:		SDL_hid_device_info-padding3
     c-struct-ptr:   SDL_hid_device_info-next
 end-structure
 

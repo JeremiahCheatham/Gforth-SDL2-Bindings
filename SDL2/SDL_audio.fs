@@ -50,7 +50,7 @@ begin-structure SDL_AudioSpec
 	c-uint16:   SDL_AudioSpec-samples
 	c-uint16:   SDL_AudioSpec-padding
 	c-uint32:   SDL_AudioSpec-size
-	c-pointer:  SDL_AudioSpec-callback
+	c-func-ptr:	SDL_AudioSpec-callback
 	c-pointer:  SDL_AudioSpec-userdata
 end-structure
 

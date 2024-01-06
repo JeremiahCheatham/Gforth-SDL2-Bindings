@@ -7,7 +7,7 @@ s" SDL2" add-lib
 
 \ SDL_GUID
 begin-structure SDL_GUID
-	c-uint8 16 * +field SDL_GUID-data
+	16 c-uint8s:    SDL_GUID-data
 end-structure
 
 \ ------===< functions >===-------

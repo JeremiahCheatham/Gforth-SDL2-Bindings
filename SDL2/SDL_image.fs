@@ -22,6 +22,7 @@ begin-structure IMG_Animation
 	c-int:          IMG_Animation-w
 	c-int:          IMG_Animation-h
 	c-int:          IMG_Animation-count
+	c-uint32:		IMG_Animation-padding
 	c-struct-ptr:   IMG_Animation-frames
 	c-int-ptr:      IMG_Animation-delays
 end-structure

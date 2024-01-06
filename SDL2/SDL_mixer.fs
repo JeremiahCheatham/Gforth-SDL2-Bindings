@@ -41,10 +41,10 @@ s" SDL2_mixer" add-lib
 \ -------===< structs >===--------
 \ struct Mix_Chunk
 begin-structure Mix_Chunk
-    c-int:      Mix_Chunk-allocated
-    c-uint8:    Mix_Chunk-abuf
-    c-uint32:   Mix_Chuck-alen
-    c-uint8:    Mix_Chuck-volume
+    c-int:          Mix_Chunk-allocated
+    c-uint8-ptr:    Mix_Chunk-abuf
+    c-uint32:       Mix_Chuck-alen
+    c-uint8:        Mix_Chuck-volume
 end-structure
 
 \ ------===< functions >===-------

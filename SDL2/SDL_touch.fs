@@ -17,6 +17,7 @@ begin-structure SDL_Finger
 	c-float:    SDL_Finger-x
 	c-float:    SDL_Finger-y
 	c-float:    SDL_Finger-pressure
+	c-uint32:	SDL_Finger-padding
 end-structure
 
 \ ------===< functions >===-------

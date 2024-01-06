@@ -4,18 +4,18 @@ s" SDL2" add-lib
 \c #include <SDL2/SDL_joystick.h>
 
 \ ----===< int constants >===-----
-#1	constant SDL_VIRTUAL_JOYSTICK_DESC_VERSION
+#1	    constant SDL_VIRTUAL_JOYSTICK_DESC_VERSION
 #32767	constant SDL_JOYSTICK_AXIS_MAX
 #-32768	constant SDL_JOYSTICK_AXIS_MIN
-#0	constant SDL_HAT_CENTERED
-#1	constant SDL_HAT_UP
-#2	constant SDL_HAT_RIGHT
-#4	constant SDL_HAT_DOWN
-#8	constant SDL_HAT_LEFT
-#3	constant SDL_HAT_RIGHTUP
-#6	constant SDL_HAT_RIGHTDOWN
-#9	constant SDL_HAT_LEFTUP
-#12	constant SDL_HAT_LEFTDOWN
+#0	    constant SDL_HAT_CENTERED
+#1	    constant SDL_HAT_UP
+#2	    constant SDL_HAT_RIGHT
+#4	    constant SDL_HAT_DOWN
+#8	    constant SDL_HAT_LEFT
+#3	    constant SDL_HAT_RIGHTUP
+#6	    constant SDL_HAT_RIGHTDOWN
+#9	    constant SDL_HAT_LEFTUP
+#12	    constant SDL_HAT_LEFTDOWN
 
 \ ---===< float constants >===----
 5.000000e0	fconstant SDL_IPHONE_MAX_GFORCE
@@ -54,12 +54,12 @@ begin-structure SDL_VirtualJoystickDesc
 	c-uint32:   SDL_VirtualJoystickDesc-axis_mask
 	c-char-ptr: SDL_VirtualJoystickDesc-name
 	c-pointer:  SDL_VirtualJoystickDesc-userdata
-	c-pointer:  SDL_VirtualJoystickDesc-Update
-	c-pointer:  SDL_VirtualJoystickDesc-SetPlayerIndex
-	c-int-ptr:  SDL_VirtualJoystickDesc-Rumble
-	c-int-ptr:  SDL_VirtualJoystickDesc-RumbleTriggers
-	c-int-ptr:  SDL_VirtualJoystickDesc-SetLED
-	c-int-ptr:  SDL_VirtualJoystickDesc-SendEffect
+	c-func-ptr:  SDL_VirtualJoystickDesc-Update
+	c-func-ptr:  SDL_VirtualJoystickDesc-SetPlayerIndex
+	c-func-ptr:  SDL_VirtualJoystickDesc-Rumble
+	c-func-ptr:  SDL_VirtualJoystickDesc-RumbleTriggers
+	c-func-ptr:  SDL_VirtualJoystickDesc-SetLED
+	c-func-ptr:  SDL_VirtualJoystickDesc-SendEffect
 end-structure
 
 \ --===< function pointers >===---

@@ -58,21 +58,21 @@ s" SDL2" add-lib
 
 \ struct SDL_GameControllerButtonBind
 begin-structure SDL_GameControllerButtonBind
-	c-sint32:           SDL_GameControllerButtonBind-bindType
-	c-sint32 2 * +field SDL_GameControllerButtonBind-value
+	c-enum:     SDL_GameControllerButtonBind-bindType
+	2 c-ints:   SDL_GameControllerButtonBind-value
 end-structure
 
 \ SDL_GameControllerButtonBind_value
 begin-structure SDL_GameControllerButtonBind_value
-	drop 0 4 +field SDL_GameControllerButtonBind_value-button
-	drop 0 4 +field SDL_GameControllerButtonBind_value-axis
-	drop 0 8 +field SDL_GameControllerButtonBind_value-hat
+	drop 0 c-int:       SDL_GameControllerButtonBind_value-button
+	drop 0 c-int:       SDL_GameControllerButtonBind_value-axis
+	drop 0 2 c-ints:    SDL_GameControllerButtonBind_value-hat
 end-structure
 
 \ SDL_GameControllerButtonBind_value_hat
 begin-structure SDL_GameControllerButtonBind_value_hat
-	c-sint32:   SDL_GameControllerButtonBind_value_hat-hat
-	c-sint32:   SDL_GameControllerButtonBind_value_hat-hat_mask
+	c-int:  SDL_GameControllerButtonBind_value_hat-hat
+	c-int:  SDL_GameControllerButtonBind_value_hat-hat_mask
 end-structure
 
 \ ------===< functions >===-------

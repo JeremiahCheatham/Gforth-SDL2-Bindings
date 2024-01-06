@@ -103,42 +103,44 @@ s" SDL2" add-lib
 
 \ struct SDL_Color
 begin-structure SDL_Color
-	drop 0 1 +field SDL_Color-r
-	drop 1 1 +field SDL_Color-g
-	drop 2 1 +field SDL_Color-b
-	drop 3 1 +field SDL_Color-a
-drop 4 end-structure
+	c-uint8:	SDL_Color-r
+	c-uint8:	SDL_Color-g
+	c-uint8:	SDL_Color-b
+	c-uint8:	SDL_Color-a
+end-structure
 
 \ struct SDL_Palette
 begin-structure SDL_Palette
-	drop 0 4 +field SDL_Palette-ncolors
-	drop 8 8 +field SDL_Palette-colors
-	drop 16 4 +field SDL_Palette-version
-	drop 20 4 +field SDL_Palette-refcount
-drop 24 end-structure
+	c-int:			SDL_Palette-ncolors
+	c-uint32:		SDL_Palette-padding
+	c-struct-ptr:	SDL_Palette-colors
+	c-uint32:		SDL_Palette-version
+	c-int:			SDL_Palette-refcount
+end-structure
 
 \ struct SDL_PixelFormat
 begin-structure SDL_PixelFormat
-	drop 0 4 +field SDL_PixelFormat-format
-	drop 8 8 +field SDL_PixelFormat-palette
-	drop 16 1 +field SDL_PixelFormat-BitsPerPixel
-	drop 17 1 +field SDL_PixelFormat-BytesPerPixel
-	drop 18 2 +field SDL_PixelFormat-padding
-	drop 20 4 +field SDL_PixelFormat-Rmask
-	drop 24 4 +field SDL_PixelFormat-Gmask
-	drop 28 4 +field SDL_PixelFormat-Bmask
-	drop 32 4 +field SDL_PixelFormat-Amask
-	drop 36 1 +field SDL_PixelFormat-Rloss
-	drop 37 1 +field SDL_PixelFormat-Gloss
-	drop 38 1 +field SDL_PixelFormat-Bloss
-	drop 39 1 +field SDL_PixelFormat-Aloss
-	drop 40 1 +field SDL_PixelFormat-Rshift
-	drop 41 1 +field SDL_PixelFormat-Gshift
-	drop 42 1 +field SDL_PixelFormat-Bshift
-	drop 43 1 +field SDL_PixelFormat-Ashift
-	drop 44 4 +field SDL_PixelFormat-refcount
-	drop 48 8 +field SDL_PixelFormat-next
-drop 56 end-structure
+	c-uint32:		SDL_PixelFormat-format
+	c-uint32:		SDL_PixelFormat-padding
+	c-struct-ptr:	SDL_PixelFormat-palette
+	c-uint8:		SDL_PixelFormat-BitsPerPixel
+	c-uint8:		SDL_PixelFormat-BytesPerPixel
+	c-uint16:		SDL_PixelFormat-padding2
+	c-uint32:		SDL_PixelFormat-Rmask
+	c-uint32:		SDL_PixelFormat-Gmask
+	c-uint32:		SDL_PixelFormat-Bmask
+	c-uint32:		SDL_PixelFormat-Amask
+	c-uint8:		SDL_PixelFormat-Rloss
+	c-uint8:		SDL_PixelFormat-Gloss
+	c-uint8:		SDL_PixelFormat-Bloss
+	c-uint8:		SDL_PixelFormat-Aloss
+	c-uint8:		SDL_PixelFormat-Rshift
+	c-uint8:		SDL_PixelFormat-Gshift
+	c-uint8:		SDL_PixelFormat-Bshift
+	c-uint8:		SDL_PixelFormat-Ashift
+	c-int:			SDL_PixelFormat-refcount
+	c-struct-ptr:	SDL_PixelFormat-next
+end-structure
 
 \ ------===< functions >===-------
 c-function SDL_GetPixelFormatName SDL_GetPixelFormatName n -- a	( format -- )

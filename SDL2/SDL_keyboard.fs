@@ -7,8 +7,9 @@ s" SDL2" add-lib
 \ struct SDL_Keysym
 begin-structure SDL_Keysym
 	c-sint32:   SDL_Keysym-scancode
-	c-sint32:   SDL_Keysym-sym
+	c-enum:     SDL_Keysym-sym
 	c-uint16:   SDL_Keysym-mod
+	c-uint16:   SDL_Keysym-padding
 	c-uint32:   SDL_Keysym-unused
 end-structure
 

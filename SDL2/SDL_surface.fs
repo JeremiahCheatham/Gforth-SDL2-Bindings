@@ -20,19 +20,23 @@ s" SDL2" add-lib
 
 \ struct SDL_Surface
 begin-structure SDL_Surface
-	drop 0 4 +field SDL_Surface-flags
-	drop 8 8 +field SDL_Surface-format
-	drop 16 4 +field SDL_Surface-w
-	drop 20 4 +field SDL_Surface-h
-	drop 24 4 +field SDL_Surface-pitch
-	drop 32 8 +field SDL_Surface-pixels
-	drop 40 8 +field SDL_Surface-userdata
-	drop 48 4 +field SDL_Surface-locked
-	drop 56 8 +field SDL_Surface-list_blitmap
-	drop 64 16 +field SDL_Surface-clip_rect
-	drop 80 8 +field SDL_Surface-map
-	drop 88 4 +field SDL_Surface-refcount
-drop 96 end-structure
+	c-uint32:		SDL_Surface-flags
+	c-uint32:		SDL_Surface-padding
+	c-struct-ptr:	SDL_Surface-format
+	c-int:			SDL_Surface-w
+	c-int:			SDL_Surface-h
+	c-int:			SDL_Surface-pitch
+	c-uint32:		SDL_Surface-padding2
+	c-pointer:		SDL_Surface-pixels
+	c-pointer:		SDL_Surface-userdata
+	c-int:			SDL_Surface-locked
+	c-uint32:		SDL_Surface-padding3
+	c-pointer:		SDL_Surface-list_blitmap
+	SDL_Rect bytes:	SDL_Surface-clip_rect
+	c-struct-ptr:	SDL_Surface-map
+	c-int:			SDL_Surface-refcount
+	c-uint32:		SDL_Surface-padding4
+end-structure
 
 \ ------===< functions >===-------
 c-function SDL_CreateRGBSurface SDL_CreateRGBSurface n n n n n n n n -- a	( flags width height depth Rmask Gmask Bmask Amask -- )

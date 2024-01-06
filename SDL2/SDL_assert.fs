@@ -24,6 +24,7 @@ begin-structure SDL_AssertData
 	c-char-ptr:     SDL_AssertData-condition
 	c-char-ptr:     SDL_AssertData-filename
     c-int:          SDL_AssertData-linenum
+	c-uint32:		SDL_AssertData-padding
 	c-char-ptr:     SDL_AssertData-function
 	c-struct-ptr:   SDL_AssertData-next
 end-structure

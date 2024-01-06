@@ -35,9 +35,9 @@ end-structure
 
 \ struct SDL_Vertex
 begin-structure SDL_Vertex
-	SDL_FPoint  +field SDL_Vertex-position
-	SDL_Color   +field SDL_Vertex-color
-	SDL_FPoint  +field SDL_Vertex-tex_coord
+	SDL_FPoint bytes:	SDL_Vertex-position
+	SDL_Color bytes:	SDL_Vertex-color
+	SDL_FPoint bytes:	SDL_Vertex-tex_coord
 end-structure
 
 \ ------===< functions >===-------

@@ -137,6 +137,7 @@ begin-structure SDL_TextEditingExtEvent
 	c-uint32:   SDL_TextEditingExtEvent-type
 	c-uint32:   SDL_TextEditingExtEvent-timestamp
 	c-uint32:   SDL_TextEditingExtEvent-windowID
+	c-uint32:   SDL_TextEditingExtEvent-padding
 	c-char-ptr: SDL_TextEditingExtEvent-text
 	c-sint32:   SDL_TextEditingExtEvent-start
 	c-sint32:   SDL_TextEditingExtEvent-length
@@ -305,6 +306,7 @@ begin-structure SDL_ControllerSensorEvent
 	c-sint32:   SDL_ControllerSensorEvent-which
 	c-sint32:   SDL_ControllerSensorEvent-sensor
 	3 c-floats: SDL_ControllerSensorEvent-data
+	c-uint32:   SDL_ControllerSensorEvent-padding
 	c-uint64:   SDL_ControllerSensorEvent-timestamp_us
 end-structure
 
@@ -322,7 +324,7 @@ end-structure
 \ struct SDL_TouchFingerEvent
 begin-structure SDL_TouchFingerEvent
 	c-uint32:   SDL_TouchFingerEvent-type
-	c-uint32:   DL_TouchFingerEvent-timestamp
+	c-uint32:   SDL_TouchFingerEvent-timestamp
 	c-sint64:   SDL_TouchFingerEvent-touchId
 	c-sint64:   SDL_TouchFingerEvent-fingerId
 	c-float:    SDL_TouchFingerEvent-x
@@ -343,7 +345,7 @@ begin-structure SDL_MultiGestureEvent
 	c-float:    SDL_MultiGestureEvent-x
 	c-float:    SDL_MultiGestureEvent-y
 	c-uint16:   SDL_MultiGestureEvent-numFingers
-	c-uint16:   SDL_MultiGestureEvent-padding
+	6 bytes:	SDL_MultiGestureEvent-padding
 end-structure
 
 \ struct SDL_DollarGestureEvent
@@ -364,6 +366,7 @@ begin-structure SDL_DropEvent
 	c-uint32:   SDL_DropEvent-timestamp
 	c-char-ptr: SDL_DropEvent-file
 	c-uint32:   SDL_DropEvent-windowID
+	c-uint32:   SDL_DropEvent-padding
 end-structure
 
 \ struct SDL_SensorEvent
@@ -372,6 +375,7 @@ begin-structure SDL_SensorEvent
 	c-uint32:   SDL_SensorEvent-timestamp
 	c-sint32:   SDL_SensorEvent-which
 	6 c-floats: SDL_SensorEvent-data
+	c-uint32:   SDL_SensorEvent-padding
 	c-uint64:   SDL_SensorEvent-timestamp_us
 end-structure
 
@@ -399,46 +403,48 @@ end-structure
 
 \ struct SDL_SysWMEvent
 begin-structure SDL_SysWMEvent
-	c-uint32:   SDL_SysWMEvent-type
-	c-uint32:   SDL_SysWMEvent-timestamp
-	c-struct-ptr:  SDL_SysWMEvent-msg
+	c-uint32:       SDL_SysWMEvent-type
+	c-uint32:       SDL_SysWMEvent-timestamp
+	c-struct-ptr:   SDL_SysWMEvent-msg
 end-structure
+
+\ -------===< unions >===--------
 
 \ union SDL_Event
 begin-structure SDL_Event
-	drop 0 16 +field SDL_Event-jhat
-	drop 0 24 +field SDL_Event-window
-	drop 0 12 +field SDL_Event-cdevice
-	drop 0 16 +field SDL_Event-adevice
-	drop 0 48 +field SDL_Event-sensor
-	drop 0 20 +field SDL_Event-jball
-	drop 0 20 +field SDL_Event-caxis
-	drop 0 28 +field SDL_Event-button
-	drop 0 16 +field SDL_Event-jbutton
-	drop 0 40 +field SDL_Event-csensor
-	drop 0 44 +field SDL_Event-wheel
-	drop 0 36 +field SDL_Event-motion
-	drop 0 40 +field SDL_Event-mgesture
-	drop 0 40 +field SDL_Event-dgesture
-	drop 0 24 +field SDL_Event-drop
-	drop 0 8 +field SDL_Event-common
-	drop 0 32 +field SDL_Event-key
-	drop 0 52 +field SDL_Event-edit
-	drop 0 20 +field SDL_Event-display
-	drop 0 16 +field SDL_Event-cbutton
-	drop 0 32 +field SDL_Event-ctouchpad
-	drop 0 48 +field SDL_Event-tfinger
-	drop 0 32 +field SDL_Event-editExt
-	drop 0 4 +field SDL_Event-type
-	drop 0 20 +field SDL_Event-jaxis
-	drop 0 12 +field SDL_Event-jdevice
-	drop 0 16 +field SDL_Event-syswm
-	drop 0 56 +field SDL_Event-padding
-	drop 0 8 +field SDL_Event-quit
-	drop 0 32 +field SDL_Event-user
-	drop 0 44 +field SDL_Event-text
-	drop 0 16 +field SDL_Event-jbattery
-drop 56 end-structure
+	drop 0 c-uint32: 								SDL_Event-type
+	drop 0 56 bytes:							SDL_Event-padding
+	drop 0 SDL_CommonEvent bytes:				SDL_Event-common
+	drop 0 SDL_DisplayEvent bytes:				SDL_Event-display
+	drop 0 SDL_WindowEvent bytes:				SDL_Event-window
+	drop 0 SDL_KeyboardEvent bytes:				SDL_Event-key
+	drop 0 SDL_TextEditingEvent bytes:			SDL_Event-edit
+	drop 0 SDL_TextEditingExtEvent bytes:		SDL_Event-editExt
+	drop 0 SDL_TextInputEvent bytes:			SDL_Event-text
+	drop 0 SDL_MouseMotionEvent bytes:			SDL_Event-motion
+	drop 0 SDL_MouseButtonEvent bytes:			SDL_Event-button
+	drop 0 SDL_MouseWheelEvent bytes:			SDL_Event-wheel
+	drop 0 SDL_JoyAxisEvent bytes:				SDL_Event-jaxis
+	drop 0 SDL_JoyBallEvent bytes:				SDL_Event-jball
+	drop 0 SDL_JoyHatEvent bytes:				SDL_Event-jhat
+	drop 0 SDL_JoyButtonEvent bytes:			SDL_Event-jbutton
+	drop 0 SDL_JoyDeviceEvent bytes:			SDL_Event-jdevice
+	drop 0 SDL_JoyBatteryEvent bytes:			SDL_Event-jbattery
+	drop 0 SDL_ControllerAxisEvent bytes:		SDL_Event-caxis
+	drop 0 SDL_ControllerButtonEvent bytes:		SDL_Event-cbutton
+	drop 0 SDL_ControllerDeviceEvent bytes:		SDL_Event-cdevice
+	drop 0 SDL_ControllerTouchpadEvent bytes:	SDL_Event-ctouchpad
+	drop 0 SDL_ControllerSensorEvent bytes:		SDL_Event-csensor
+	drop 0 SDL_AudioDeviceEvent bytes:			SDL_Event-adevice
+	drop 0 SDL_TouchFingerEvent bytes:			SDL_Event-tfinger
+	drop 0 SDL_MultiGestureEvent bytes:			SDL_Event-mgesture
+	drop 0 SDL_DollarGestureEvent bytes:		SDL_Event-dgesture
+	drop 0 SDL_DropEvent bytes:					SDL_Event-drop
+	drop 0 SDL_SensorEvent bytes:				SDL_Event-sensor
+	drop 0 SDL_QuitEvent bytes:					SDL_Event-quit
+	drop 0 SDL_UserEvent bytes:					SDL_Event-user
+	drop 0 SDL_SysWMEvent bytes:				SDL_Event-syswm
+end-structure
 
 \ ------===< functions >===-------
 c-function SDL_PumpEvents SDL_PumpEvents  -- void	( -- )

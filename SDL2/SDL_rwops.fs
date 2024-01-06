@@ -19,35 +19,36 @@ s" SDL2" add-lib
 
 \ -------===< structs >===--------
 
-\ struct SDL_RWops
-begin-structure SDL_RWops
-	drop 0 8 +field SDL_RWops-size
-	drop 8 8 +field SDL_RWops-seek
-	drop 16 8 +field SDL_RWops-read
-	drop 24 8 +field SDL_RWops-write
-	drop 32 8 +field SDL_RWops-close
-	drop 40 4 +field SDL_RWops-type
-	drop 48 24 +field SDL_RWops-hidden
-drop 72 end-structure
-
-\ SDL_RWops_hidden
-begin-structure SDL_RWops_hidden
-	drop 0 16 +field SDL_RWops_hidden-unknown
-	drop 0 24 +field SDL_RWops_hidden-mem
-drop 24 end-structure
-
 \ SDL_RWops_hidden_unknown
 begin-structure SDL_RWops_hidden_unknown
-	drop 0 8 +field SDL_RWops_hidden_unknown-data1
-	drop 8 8 +field SDL_RWops_hidden_unknown-data2
-drop 16 end-structure
+	c-pointer:	SDL_RWops_hidden_unknown-data1
+	c-pointer:	SDL_RWops_hidden_unknown-data2
+end-structure
 
 \ SDL_RWops_hidden_mem
 begin-structure SDL_RWops_hidden_mem
-	drop 0 8 +field SDL_RWops_hidden_mem-base
-	drop 8 8 +field SDL_RWops_hidden_mem-here
-	drop 16 8 +field SDL_RWops_hidden_mem-stop
-drop 24 end-structure
+	c-uint8-ptr:	SDL_RWops_hidden_mem-base
+	c-uint8-ptr:	SDL_RWops_hidden_mem-here
+	c-uint8-ptr:	SDL_RWops_hidden_mem-stop
+end-structure
+
+\ SDL_RWops_hidden
+begin-structure SDL_RWops_hidden
+	SDL_RWops_hidden_unknown bytes:	SDL_RWops_hidden-unknown
+	SDL_RWops_hidden_mem bytes:		SDL_RWops_hidden-mem
+end-structure
+
+\ struct SDL_RWops
+begin-structure SDL_RWops
+	c-func-ptr:				SDL_RWops-size
+	c-func-ptr:				SDL_RWops-seek
+	c-func-ptr:				SDL_RWops-read
+	c-func-ptr:				SDL_RWops-write
+	c-func-ptr:				SDL_RWops-close
+	c-uint32:				SDL_RWops-type
+	c-uint32:				SDL_RWops-padding
+	SDL_RWops_hidden bytes:	SDL_RWops-hidden
+end-structure
 
 \ --===< function pointers >===---
 \ c-funptr SDL_RWops-size() {((struct SDL_RWops*)ptr)->size} a -- n	( context -- )
